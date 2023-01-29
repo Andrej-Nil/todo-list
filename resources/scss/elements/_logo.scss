@@ -2,8 +2,7 @@
     position: relative;
     width: 70px;
     height: 50px;
-    padding: 5px 13px 5px 13px;
-
+    padding: 3px 0px 3px 10px;
 }
 
 .logo__icon{
@@ -20,18 +19,26 @@
     &::before{
         content: '';
         position: absolute;
-        top: 7px;
-        left: 5px;
+        top: 2px;
+        left: 2px;
         display: block;
         height: 100%;
-        width: 5px;
+        width: 6px;
 
         background-image: url('../image/icon/pen.svg');
         background-repeat: no-repeat;
         background-size: contain;
     }
+}
 
-
+.logo__line{
+    position: absolute;
+    bottom: 5px;
+    left: 6px;
+    display: block;
+    height: 2px;
+    width: 60px;
+    background: #000;
 }
 
 .logo__text{
@@ -40,8 +47,8 @@
 
 .logo__word{
     display: block;
-    font-weight: 500;
-    //line-height: 1;
-    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.1;
+    font-size: 18px;
     color: #000;
 }
