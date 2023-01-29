@@ -1,0 +1,10 @@
+.header{
+    padding: 10px 0;
+    background: #fdfdfd;
+    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.header__inner{
+    display: flex;
+    justify-content: space-between;
+}

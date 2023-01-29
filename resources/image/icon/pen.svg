@@ -1,0 +1,49 @@
+<svg width="57" height="400" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG Editor - http://github.com/mzalive/SVG Editor/ -->
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="59" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <style transform="matrix(19.75308830355425,0,0,19.75308830355425,0,0) " type="text/css">.st0{fill:#231F20;}
+	.st1{fill:none;stroke:#231F20;stroke-width:2;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;}</style>
+  <g stroke="null" id="svg_51">
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_44"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_43"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_42"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_41"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_40"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_39"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_38"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_37"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_36"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_35"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_34"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_33">
+    <g stroke="null" id="svg_46">
+     <g stroke="null" id="svg_47">
+      <path stroke="null" id="svg_48" d="m-14.41451,-50.817697l-7,0l0,-1l0,-5c0,-2.2 1.8,-4 4,-4s4,1.8 4,4l0,6l-1,0zm-5,-2l4,0l0,-4c0,-1.1 -0.9,-2 -2,-2s-2,0.9 -2,2l0,4z" class="st0"/>
+     </g>
+     <g stroke="null" id="svg_49">
+      <path stroke="null" id="svg_50" d="m-17.41451,-7.017697l-4,-10.7l0,-35.1l8,0l0,35.2l-4,10.6zm-2,-11l2,5.3l2,-5.3l0,-32.8l-4,0l0,32.8z" class="st0"/>
+     </g>
+    </g>
+   </g>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_32"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_31"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_30"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_29"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_28"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_27"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_26"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_25"/>
+   <g stroke="null" transform="matrix(6.8780877319285185,0,0,7.355318704886938,148.27855831018044,447.97555494910654) " id="svg_24"/>
+  </g>
+ </g>
+</svg>

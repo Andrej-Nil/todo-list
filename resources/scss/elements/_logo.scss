@@ -1,0 +1,47 @@
+.logo{
+    position: relative;
+    width: 70px;
+    height: 50px;
+    padding: 5px 13px 5px 13px;
+
+}
+
+.logo__icon{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: block;
+    width: 33px;
+    border: 1px solid #aaa;
+    border-radius: 4px ;
+    background: #f5f5f5;
+
+    &::before{
+        content: '';
+        position: absolute;
+        top: 7px;
+        left: 5px;
+        display: block;
+        height: 100%;
+        width: 5px;
+
+        background-image: url('../image/icon/pen.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+
+}
+
+.logo__text{
+    position: relative;
+}
+
+.logo__word{
+    display: block;
+    font-weight: 500;
+    //line-height: 1;
+    font-size: 16px;
+    color: #000;
+}

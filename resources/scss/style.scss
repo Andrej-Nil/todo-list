@@ -1,5 +1,10 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+@import "fonts";
+@import "main";
+@import "containers";
+
+@import "elements/logo";
+@import "elements/avatar";
+
+@import "./blocks/header";
+@import "./blocks/header-user";
+@import "./blocks/header-menu";
