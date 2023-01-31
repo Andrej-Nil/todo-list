@@ -1,0 +1,48 @@
+.table {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 5px;
+}
+
+.table__content{
+    border: 1px solid #f0f0f0;
+}
+
+.table__row{
+    display: flex;
+
+    border-bottom: 1px solid #f0f0f0;
+    &:last-child{
+        border-bottom: none;
+    }
+}
+
+.table__coll{
+    border-right: 1px solid #f0f0f0;
+    padding: 10px 15px;
+    &:last-child{
+        border-right: none;
+    }
+    &_name{
+        flex-grow: 1;
+    }
+}
+
+.table__link{
+    display: block;
+
+    color: #2d3748;
+    font-weight: 500;
+    &:hover{
+        color: #4375c9;
+    }
+}
+
+.table__btn{
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+
+
