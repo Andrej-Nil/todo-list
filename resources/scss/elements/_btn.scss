@@ -23,4 +23,31 @@
         }
     }
 
+    &_red{
+        background: #ff5e5e;
+        color: #fff;
+        &:hover{
+            background: #e83636;
+            color: #fff;
+        }
+    }
+
+    &_green{
+        background: #59ce2e;
+        color: #fff;
+        &:hover{
+            background: #3eb016;
+            color: #fff;
+        }
+    }
+
+    &_yellow{
+        background: #faa73a;
+        color: #fff;
+        &:hover{
+            background: #de9230;
+            color: #fff;
+        }
+    }
+
 }

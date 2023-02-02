@@ -2,15 +2,17 @@
     background: #fff;
     padding: 20px 30px;
     border-radius: 5px;
+    min-height: 350px;
 }
 
 .table__content{
     border: 1px solid #f0f0f0;
+
 }
 
 .table__row{
     display: flex;
-    min-height: 40px;
+    min-height: 35px;
     border-bottom: 1px solid #f0f0f0;
     &:last-child{
         border-bottom: none;
@@ -21,7 +23,7 @@
     border-right: 1px solid #f0f0f0;
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 5px;
     &:last-child{
         border-right: none;
     }
@@ -40,9 +42,35 @@
 }
 
 .table__btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+}
+
+.table__btn-icon{
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    &_delete{
+        background-image: url('../image/icon/cross.svg');
+    }
+    &_edit{
+        background-image: url('../image/icon/edit.svg');
+    }
+
+    &_clock{
+        background-image: url('../image/icon/clock.svg');
+    }
+
+    &_important{
+        background-image: url('../image/icon/important.svg');
+    }
 }
 
 
