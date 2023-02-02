@@ -10,7 +10,7 @@
 
 .table__row{
     display: flex;
-
+    min-height: 40px;
     border-bottom: 1px solid #f0f0f0;
     &:last-child{
         border-bottom: none;
@@ -19,7 +19,9 @@
 
 .table__coll{
     border-right: 1px solid #f0f0f0;
-    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
     &:last-child{
         border-right: none;
     }
@@ -29,8 +31,7 @@
 }
 
 .table__link{
-    display: block;
-
+    display: inline-block;
     color: #2d3748;
     font-weight: 500;
     &:hover{
