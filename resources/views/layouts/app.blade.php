@@ -13,14 +13,15 @@
     <div class="header__inner container">
         <div class="header-logo">
             <a class="header-logo__logo" href="{{route('home')}}">
-                <div class="logo">
-                    <i class="logo__icon"></i>
-                    <span class="logo__line"></span>
-                    <span class="logo__text">
-                        <span class="logo__word">Your</span>
-                        <span class="logo__word">Tasks</span>
-                    </span>
-                </div>
+                <img class="logo" src="{{asset('image/logo.svg')}}" alt="logo">
+{{--                <div class="logo">--}}
+{{--                    <i class="logo__icon"></i>--}}
+{{--                    <span class="logo__line"></span>--}}
+{{--                    <span class="logo__text">--}}
+{{--                        <span class="logo__word">Your</span>--}}
+{{--                        <span class="logo__word">Tasks</span>--}}
+{{--                    </span>--}}
+{{--                </div>--}}
             </a>
         </div>
 

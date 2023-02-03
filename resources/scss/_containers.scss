@@ -5,3 +5,9 @@
     padding: 0 15px;
 
 }
+
+.row-container{
+    display: grid;
+    grid-template-columns: auto 300px;
+    gap: 20px;
+}
