@@ -4,7 +4,7 @@
     outline: none;
     background: #dfdfdf;
     padding: 10px 30px;
-    border-radius: 5px;
+    //border-radius: 5px;
     color: #4a5568;
     font-weight: 500;
     font-size: 16px;
@@ -13,6 +13,10 @@
     &:hover{
         background: #ccc;
         color: #2d3748;
+    }
+    &_small{
+        padding: 7px 20px;
+        font-size: 14px;
     }
     &_blue{
         background: #517bc6;

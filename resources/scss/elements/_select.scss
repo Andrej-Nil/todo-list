@@ -1,0 +1,63 @@
+.select {
+    position: relative;
+    &.open {
+        .select__arrow{
+            transform: rotate(180deg);
+        }
+        .select__dropdown{
+            display: flex;
+        }
+    }
+
+
+}
+
+.select__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.select__arrow {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-image: url('../image/icon/arrow-down.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.select__title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.select__dropdown {
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    width: 100%;
+    padding: 10px 0;
+    border-top: none;
+    background: #fff;
+    z-index: 100;
+    max-height: 200px;
+    overflow: auto;
+}
+
+
+.select__list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.select__item {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+

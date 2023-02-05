@@ -14,21 +14,13 @@
         <div class="header-logo">
             <a class="header-logo__logo" href="{{route('home')}}">
                 <img class="logo" src="{{asset('image/logo.svg')}}" alt="logo">
-{{--                <div class="logo">--}}
-{{--                    <i class="logo__icon"></i>--}}
-{{--                    <span class="logo__line"></span>--}}
-{{--                    <span class="logo__text">--}}
-{{--                        <span class="logo__word">Your</span>--}}
-{{--                        <span class="logo__word">Tasks</span>--}}
-{{--                    </span>--}}
-{{--                </div>--}}
             </a>
         </div>
 
         <div class="header-user">
             <div class="header-user__btn">
                 <span class="header-user__avatar avatar">
-                    <img class="avatar__img" src="{{asset('/image/icon/user.svg')}}" alt="avatar">
+                    <img class="avatar__img" src="{{asset('/image/user.svg')}}" alt="avatar">
                 </span>
 
                 <i class="header-user__arrow"></i>

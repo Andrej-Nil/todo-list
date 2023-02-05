@@ -1,0 +1,23 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+}
+
+.form__inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: auto;
+
+}
+
+.form__item{
+    border-bottom: 1px solid #ccc;
+    padding:8px 10px;
+}
+
+.form__submit{
+    width: 100%;
+}
