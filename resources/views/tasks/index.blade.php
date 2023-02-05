@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
+
 @section('content')
     <div class="top">
-        <h1 class="main-title">Текущие задачи</h1>
+        <h1 class="main-title">Список задачь</h1>
         <a href="{{route('tasks.create')}}" class="btn btn_blue">Создать задачу</a>
     </div>
 
@@ -13,7 +14,6 @@
         </button>
     </div>
     <div class="content row-container">
-
 
         <div class="table block">
             <div class="table__content">
@@ -62,11 +62,8 @@
         <div class="sidebar block">
             <form id="filter" action="test" method="GET" class="form">
                 @csrf
-
-
                 <div class="form__inputs">
                     <div class="select">
-
                         <div class="select__top">
                             <p class="select__title">Сначало новые</p>
                             <i class="select__arrow"></i>
@@ -167,11 +164,31 @@
                         <span class="checkbox__fake"></span>
 
                     </label>
+
+                    <label class="form__item checkbox">
+                        <span class="checkbox__title">
+                            Свободные задачи
+                        </span>
+                        <input class="checkbox__input" type="checkbox"/>
+                        <span class="checkbox__fake"></span>
+
+                    </label>
+
+                    <label class="form__item checkbox">
+                        <span class="checkbox__title">
+                            В работе
+                        </span>
+                        <input class="checkbox__input" type="checkbox"/>
+                        <span class="checkbox__fake"></span>
+
+                    </label>
                 </div>
                 <button class="form__submit btn btn_small btn_blue">Показать</button>
 
             </form>
         </div>
     </div>
+
+
 
 @endsection
