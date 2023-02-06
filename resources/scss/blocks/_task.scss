@@ -1,0 +1,40 @@
+.task{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.task__content{
+    display: flex;
+    gap: 20px;
+}
+
+.task__description{
+}
+
+
+.task-info{
+    width: 350px;
+    flex-shrink: 0;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.task-info__list{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.task-info__item{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background: #f0f0f0;
+}
+
+.task__controls{
+    display: flex;
+    gap:20px;
+    justify-content: flex-end;
+}

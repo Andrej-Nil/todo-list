@@ -2,12 +2,13 @@
 
 @section('content')
     <div class="top">
-        <h1 class="main-title">Создание задачи</h1>
+        <h1 class="main-title">Редостирование задачи</h1>
     </div>
 
     <div class="content">
-        <form class="form block" action="{{route('tasks.store')}}" method="POST">
+        <form class="form block" action="{{route('tasks.update', 5)}}" method="POST">
             @csrf
+            @method('PUT')
             <div class="form__inputs">
                 <input form="filter" class="input" type="text" placeholder="Название" name="value">
                 <textarea class="input " name="description" id="" cols="30" rows="5" placeholder="Описание"></textarea>
@@ -35,7 +36,7 @@
             </div>
 
             <div class="form__bottom">
-                <button class="btn btn_blue btn_small" type="submit">Создать</button>
+                <button class="btn btn_blue btn_small" type="submit">Сохранить</button>
             </div>
 
         </form>
