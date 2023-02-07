@@ -111,10 +111,10 @@
             <div id="userMenu" data-menu-status="close" class="header-menu">
                 <ul class="header-menu__list">
                     <li class="header-menu__item">
-                        <a href="" class="header-menu__link">Вход</a>
+                        <a href="{{ route('login') }}" class="header-menu__link">Вход</a>
                     </li>
                     <li class="header-menu__item">
-                        <a href="" class="header-menu__link">Регистрация</a>
+                        <a href="{{ route('register') }}" class="header-menu__link">Регистрация</a>
                     </li>
                 </ul>
             </div>

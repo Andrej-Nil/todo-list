@@ -1,6 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="top">
+        <h1 class="main-title">Регистрация</h1>
+    </div>
+
+    <div class="content">
+        <div class="block">
+            <form class="form middle-container" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="control">
+                    <label for="email" class="control__label">Почта</label>
+                    <input type="text" id="email" name="email" class="input">
+                </div>
+                <div class="control">
+                    <label for="email" class="control__label">Пароль</label>
+                    <input type="text" id="email" name="email" class="input">
+                </div>
+
+                <div class="form__bottom">
+                    <a href="{{ route('login') }}" class="form__link">Вход</a>
+
+                    <button class="btn btn_blue btn_small" type="submit">Регистрация</button>
+                </div>
+            </form>
+        </div>
+    </div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
