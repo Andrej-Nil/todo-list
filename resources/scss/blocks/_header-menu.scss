@@ -3,6 +3,9 @@
     position: absolute;
     top: 100%;
     right: 0;
+    background: #fdfdfd;
+    width: 240px;
+    padding: 10px 15px;
     transform: translateY(30px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     &.open{
@@ -10,19 +13,19 @@
     }
 }
 
-.header-menu__list{
-    width: 240px;
-    padding: 10px 15px;
-
-    background: #fdfdfd;
-    border-radius: 5px;
-}
+//.header-menu__list{
+//
+//
+//
+//    border-radius: 5px;
+//}
 
 .header-menu__item{
     margin-bottom: 5px;
     &:last-child{
         margin-bottom: 0;
     }
+
 }
 
 .header-menu__link{
@@ -30,8 +33,15 @@
     transition: 0.2s ease-in-out;
     padding: 5px 15px;
     color: #1a202c;
-    border-radius: 5px;
+    background: none;
+    cursor: pointer;
     &:hover{
         background: #f0f0f0;
+    }
+    &_logout{
+        width: 100%;
+        text-align: left;
+        outline: none;
+        border: none;
     }
 }

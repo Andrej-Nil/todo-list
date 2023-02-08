@@ -12,10 +12,20 @@
                 <div class="control">
                     <label for="email" class="control__label">Почта</label>
                     <input type="text" id="email" name="email" class="input">
+                    @error('email')
+                    <span >
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
                 </div>
                 <div class="control">
-                    <label for="email" class="control__label">Пароль</label>
-                    <input type="text" id="email" name="email" class="input">
+                    <label for="password" class="control__label">Пароль</label>
+                    <input type="password" id="password" name="password" class="input">
+                    @error('password')
+                    <span >
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
                 </div>
 
                 <div class="form__bottom">

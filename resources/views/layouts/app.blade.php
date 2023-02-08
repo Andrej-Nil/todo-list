@@ -99,6 +99,21 @@
             </a>
         </div>
 
+        @auth
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="{{route('home')}}" class="nav__link">Мои задачи</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{route('tasks.index')}}" class="nav__link">Пользователи</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{route('tasks.index')}}" class="btn btn_blue btn_small">Сток задач</a>
+                    </li>
+                </ul>
+            </nav>
+
         <div class="header-user">
             <div id="userBtn" class="header-user__btn">
                 <span class="header-user__avatar avatar">
@@ -107,18 +122,42 @@
 
                 <i class="header-user__arrow"></i>
             </div>
-
             <div id="userMenu" data-menu-status="close" class="header-menu">
                 <ul class="header-menu__list">
+
+                        <li class="header-menu__item">
+                            <a href="{{ route('login') }}" class="header-menu__link">Профиль</a>
+                        </li>
+
+
+                @if (Auth::user()->is_admin)
+                            <li class="header-menu__item">
+                                <span class="header-menu__link">admin</span>
+
+                            </li>
+
+                @endif
+
                     <li class="header-menu__item">
-                        <a href="{{ route('login') }}" class="header-menu__link">Вход</a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="header-menu__link header-menu__link_logout">Выход</button>
+                        </form>
+{{--                        <a href="{{ route('login') }}" class="header-menu__link">Профиль</a>--}}
                     </li>
-                    <li class="header-menu__item">
-                        <a href="{{ route('register') }}" class="header-menu__link">Регистрация</a>
-                    </li>
+
+            @else
+
+                <div class="header__login">
+                        <a href="{{ route('login') }}" class="btn btn_small btn_green">Вход</a>
+                        <a href="{{ route('register') }}" class="btn btn_small btn_blue">Регистрация</a>
+                </div>
+
+
+
+            @endauth
                 </ul>
             </div>
-
         </div>
     </div>
 </header>

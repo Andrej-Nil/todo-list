@@ -1,0 +1,20 @@
+.nav{
+    display: flex;
+    align-items: center;
+}
+
+.nav__list{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav__link{
+    color: #2d3748;
+
+    &:hover{
+        color: #517bc6;
+        border-bottom: 1px solid #517bc6;
+
+    }
+}
