@@ -1,0 +1,47 @@
+.user-card__inner{
+    display: flex;
+    gap: 20px;
+    color: #2d3748;
+}
+
+.user-card__photo{
+    width: 150px;
+}
+
+.user-card__img{
+    width: 100%;
+}
+
+.user-card__content{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.user-card__title{
+    font-size: 20px;
+    margin-bottom: auto;
+}
+
+.user-card__subtitle{
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.user-card__list{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 250px;
+    width: 100%;
+    font-size: 12px;
+}
+
+.user-card__item{
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 5px;
+    background: #f5f5f5;
+}
+
+

@@ -7,8 +7,7 @@
 }
 
 .row-container{
-    display: grid;
-    grid-template-columns: auto 300px;
+    display: flex;
     gap: 20px;
 }
 

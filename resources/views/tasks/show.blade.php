@@ -4,6 +4,15 @@
 @section('content')
     <div class="top">
         <h1 class="main-title">Название задачи</h1>
+        <div class="top__controls">
+            <a href="{{route('tasks.edit', 5)}}" class="btn btn_small btn_yellow">Редостировать</a>
+
+            <form action="{{}}" method="POST">
+                @csrf
+                @method('delete')
+                <button class="btn btn_small btn_red">Удалить</button>
+            </form>
+        </div>
     </div>
 
     <div class="content">
@@ -49,15 +58,7 @@
             </div>
 
 
-            <div class="task__controls">
-                <a href="{{route('tasks.edit', 5)}}" class="btn btn_small btn_yellow">Редостировать</a>
 
-                <form action="{{}}" method="POST">
-                    @csrf
-                    @method('delete')
-                    <button class="btn btn_small btn_red">Удалить</button>
-                </form>
-            </div>
         </div>
     </div>
 @endsection

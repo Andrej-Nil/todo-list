@@ -1,0 +1,43 @@
+.user{
+    display: flex;
+    gap: 20px;
+}
+
+.user__photo{
+    width: 200px;
+}
+
+.user__image{
+    width: 100%;
+}
+
+.user__content{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+
+.user__title{
+    font-size: 24px;
+    margin-bottom: auto;
+}
+
+.user__subtitle{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.user__list{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.user__item{
+    display: flex;
+    justify-content: space-between;
+    background: #f5f5f5;
+    padding: 2px 5px;
+}
+

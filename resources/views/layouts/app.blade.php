@@ -106,7 +106,7 @@
                         <a href="{{route('home')}}" class="nav__link">Мои задачи</a>
                     </li>
                     <li class="nav__item">
-                        <a href="{{route('tasks.index')}}" class="nav__link">Пользователи</a>
+                        <a href="{{route('users.index')}}" class="nav__link">Пользователи</a>
                     </li>
                     <li class="nav__item">
                         <a href="{{route('tasks.index')}}" class="btn btn_blue btn_small">Сток задач</a>
@@ -117,7 +117,7 @@
         <div class="header-user">
             <div id="userBtn" class="header-user__btn">
                 <span class="header-user__avatar avatar">
-                    <img class="avatar__img" src="{{asset('/image/user.svg')}}" alt="avatar">
+                    <img class="avatar__img" src="{{asset('/image/icon/user.svg')}}" alt="avatar">
                 </span>
 
                 <i class="header-user__arrow"></i>
