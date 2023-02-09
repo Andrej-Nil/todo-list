@@ -12,8 +12,7 @@
         </button>
     </form>
 
-    <div class="content">
-        <div class="user-list">
+    <div class="content two-coll">
             <div class="user-card block">
                 <a href="{{route('users.show', 5)}}" class="user-card__link">
                     <div class="user-card__inner">
@@ -81,6 +80,5 @@
                     </div>
                 </a>
             </div>
-        </div>
     </div>
 @endsection

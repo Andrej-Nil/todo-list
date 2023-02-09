@@ -5,7 +5,6 @@
     padding: 0 15px;
 
 }
-
 .row-container{
     display: flex;
     gap: 20px;
@@ -14,4 +13,11 @@
 .middle-container{
     max-width: 520px;
     margin: 0 auto;
+}
+
+.two-coll{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    align-items: flex-start;
 }

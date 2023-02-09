@@ -1,0 +1,15 @@
+.user-edit{
+    display: flex;
+    gap: 20px;
+}
+
+.user-edit__preview{
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.user-edit__photo{
+    margin-bottom: 20px;
+    width: 100%;
+
+}
