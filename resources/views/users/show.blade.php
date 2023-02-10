@@ -8,7 +8,7 @@
 
         <div class="top__controls">
             <a href="{{route('users.edit', 5)}}" class="btn btn_yellow btn_small">Редоктирование</a>
-            <form action="" method="POST">
+            <form action="{{route('users.destroy', 5)}}" method="POST">
                 @csrf
                 @method('delete')
                 <button class="btn btn_small btn_red">Удалить</button>

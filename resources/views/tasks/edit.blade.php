@@ -32,6 +32,12 @@
                         <span class="date__title"> Дата исполнения: </span>
                         <input class="date__input input" name="sorting" value="2" type="date"/>
                     </label>
+
+                    <label class="checkbox form__item">
+                        <span class="checkbox__title"> Добавить в общий стек </span>
+                        <input class="checkbox__input" name="is_publish" value="2" type="checkbox"/>
+                        <span class="checkbox__fake"></span>
+                    </label>
                 </div>
             </div>
 

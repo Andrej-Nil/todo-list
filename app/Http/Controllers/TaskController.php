@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
+use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -14,12 +17,17 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
-    public function store(){
+    public function store(TaskRequest $request){
 
-        return to_route('tasks.show', 5);
+        $task = Task::create($request->validated());
+
+        Auth::user()->tasks()->attach($task);
+
+        return to_route('tasks.show', $task);
     }
 
-    public function show() {
+    public function show(Task $task) {
+        dd($task);
         return view('tasks.show');
     }
 
@@ -32,6 +40,8 @@ class TaskController extends Controller
     }
 
     public function destroy($id) {
-        return to_route('tasks.index');
+        Auth::logout();
+        return to_route('login');
+//
     }
 }

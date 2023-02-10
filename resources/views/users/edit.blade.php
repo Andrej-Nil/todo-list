@@ -6,7 +6,7 @@
     </div>
 
     <div class="content">
-        <form action="" method="post" class="user-edit block">
+        <form action="{{route('users.update', 5)}}" method="post" class="user-edit block">
             @csrf
             @method('put')
             <div class="user-edit__preview">
@@ -17,43 +17,42 @@
                     <span class="file__fake btn btn_blue btn_small">Выбрать фото</span>
                 </label>
             </div>
-<div class="form__inputs">
-        <input type="text" name="name" value="{{ old('name') }}" class="input" required autocomplete="name"
-               autofocus>
-        @error('name')
-        <span class="invalid-feedback" role="alert">
+            <div class="form__inputs">
+                <input type="text" name="name" value="{{ old('name') }}" class="input" required autocomplete="name"
+                       autofocus>
+                @error('name')
+                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-        @enderror
+                @enderror
 
 
-        <input type="text" id="email" name="email" value="{{ old('email') }}" class="input" required
-               autocomplete="email">
-        @error('email')
-        <span class="invalid-feedback" role="alert">
+                <input type="text" id="email" name="email" value="{{ old('email') }}" class="input" required
+                       autocomplete="email">
+                @error('email')
+                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-        @enderror
-        <input id="password" type="password" name="password" class="input" required
-               autocomplete="new-password">
-        @error('password')
-        <span class="invalid-feedback" role="alert">
+                @enderror
+                <input id="password" type="password" name="password" class="input" required
+                       autocomplete="new-password">
+                @error('password')
+                <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-        @enderror
+                @enderror
 
 
-        <input id="password-confirm" type="password" class="input" name="password_confirmation" required
-               autocomplete="new-password">
-        @error('password_confirmation')
-        <span class="invalid-feedback" role="alert">
+                <input id="password-confirm" type="password" class="input" name="password_confirmation" required
+                       autocomplete="new-password">
+                @error('password_confirmation')
+                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-        @enderror
+                @enderror
 
 
-
-</div>
+            </div>
             <button class="btn btn_blue btn_small" type="submit">Сохранить</button>
 
         </form>

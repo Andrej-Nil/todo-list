@@ -18,4 +18,13 @@ class UserController extends Controller
         return view('users.edit');
     }
 
+    public function update($id) {
+        return to_route('users.show', 5);
+    }
+
+    public function destroy($id) {
+
+//        return to_route('tasks.index');
+    }
+
 }

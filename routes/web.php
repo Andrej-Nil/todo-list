@@ -21,10 +21,9 @@ use Illuminate\Support\Facades\Route;
 //});
 Auth::routes();
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('/', [HomeController::class, 'index'])->name('home');
-
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
     Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
@@ -36,6 +35,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [TaskController::class, 'destroy'])->name('users.destroy');
 });
 
 
