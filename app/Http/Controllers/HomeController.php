@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,9 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         if (Auth::check()) {
-            return view('home');
+            $tasks = Task::find(Auth::user()->id)->get();
+            return view('home', compact('tasks'));
         }else{
             return view('landing');
         }

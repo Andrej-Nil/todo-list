@@ -47,6 +47,8 @@
                         <input class="checkbox__input" name="is_publish" value="1" type="checkbox"/>
                         <span class="checkbox__fake"></span>
                     </label>
+
+                    <input type="hidden" name="customer" value="{{Auth::user()->id}}">
                 </div>
 
 

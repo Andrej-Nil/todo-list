@@ -16,46 +16,18 @@
     <div class="content row-container">
 
         <div class="table block">
-            <div class="table__content">
 
-                <div class="table__row">
-                    <div class="table__coll table__coll_name">
-                        <a href="{{route('home')}}" class="table__link">
-                            Первая задача
-                        </a>
-                    </div>
-                    <div class="table__coll">
-                        <div claas="table-info">
-                            <span class="table__btn btn ">
-                            <i class="table__btn-icon table__btn-icon_description" title="Важное"></i>
-                                <p class="table-info__desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid beatae culpa doloribus expedita, neque quidem sint unde ut vitae voluptas.
-                                </p>
-                        </span>
+                <div class="table__content">
+                    @forelse($tasks as $task)
+                        @include('includes.table-task')
+                    @empty
+                        <div class="table-message">
+                            <p class="table-message__title">В стоке пока нет задач.</p>
+                            <p class="table-message__text">
+                                Вы можете создать <a href="{{route('tasks.create')}}" class="link">задачу</a> добавив ее в сток
+                            </p>
                         </div>
-
-                    </div>
-                    <div class="table__coll">
-                        <a href="{{route('home')}}" class="table__btn btn btn_yellow">
-                            <i class="table__btn-icon table__btn-icon_important" title="Важное"></i>
-                        </a>
-                    </div>
-                    <div class="table__coll">
-                        <a href="{{route('home')}}" class="table__btn btn btn_green">
-                            <i class="table__btn-icon table__btn-icon_clock" title="статус"></i>
-                        </a>
-                    </div>
-                    <div class="table__coll">
-                        <a href="{{route('home')}}" class="table__btn btn btn_blue">
-                            <i class="table__btn-icon table__btn-icon_edit" title="Редостировать"></i>
-                        </a>
-                    </div>
-                    <div class="table__coll">
-                        <a href="{{route('home')}}" class="table__btn btn btn_red">
-                            <i class="table__btn-icon table__btn-icon_delete" title="удалить"></i>
-                        </a>
-                    </div>
-                </div>
+                    @endforelse
 
             </div>
         </div>

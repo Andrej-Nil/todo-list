@@ -26,6 +26,8 @@ class TaskRequest extends FormRequest
         return [
             'title' =>['string', 'required'],
             'description'=>['string', 'required'],
+            'status'=>['string', 'between:0,3'],
+            'customer'=>['integer', 'required'],
             'is_important'=>['integer', 'between:0,1'],
             'is_urgent'=>['integer', 'between:0,1'],
             'is_publish'=>['integer', 'between:0,1'],
