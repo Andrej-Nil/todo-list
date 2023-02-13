@@ -5,32 +5,34 @@
             {{$task->title}}
         </a>
     </div>
-
+    @if($task->is_urgent)
+        <div class="table__coll">
+        <span class="table__btn btn btn_red">
+            <i class="table__btn-icon table__btn-icon_run" title="статус"></i>
+        </span>
+        </div>
+    @endif
     <div class="table__coll">
         @if($task->status == 1)
-            <div class="table__btn btn btn_green">
-                <i class="table__btn-icon table__btn-icon_clock" title="статус"></i>
+            <div class="table__btn btn btn_blue" title="В работе">
+                <i class="table__btn-icon table__btn-icon_clock"></i>
             </div>
         @elseif($task->status == 2)
-            <div class="table__btn btn btn_green">
-                <i class="table__btn-icon table__btn-icon_complete" title="статус"></i>
+            <div class="table__btn btn btn_yellow" title="Приостановленна">
+                <i class="table__btn-icon table__btn-icon_pause"></i>
             </div>
         @elseif($task->status == 3)
-            <div class="table__btn btn btn_yellow">
-                <i class="table__btn-icon table__btn-icon_pause" title="статус"></i>
+            <div class="table__btn btn btn_green" title="Выполнена">
+                <i class="table__btn-icon table__btn-icon_complete"></i>
             </div>
         @else
-            <div class="table__btn btn">
-                <i class="table__btn-icon table__btn-icon_clock" title="статус"></i>
+            <div class="table__btn btn" title="В ожидании">
+                <i class="table__btn-icon table__btn-icon_clock"></i>
             </div>
         @endif
 
     </div>
-    <div class="table__coll">
-        <span class="table__btn btn btn_red">
-            <i class="table__btn-icon table__btn-icon_clock" title="статус"></i>
-        </span>
-    </div>
+
     <div class="table__coll">
         <div claas="table-info">
             <div class="table__btn btn btn_white">

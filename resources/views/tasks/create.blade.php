@@ -20,7 +20,7 @@
             <div class="form__inputs">
                 <input class="input" type="text" placeholder="Название" name="title">
 
-                <textarea class="input " name="description" id="" cols="30" rows="5" placeholder="Описание"></textarea>
+                <textarea class="input " name="description" cols="30" rows="5" placeholder="Описание"></textarea>
 
             </div>
             <div class="form__inputs">
@@ -48,7 +48,7 @@
                         <span class="checkbox__fake"></span>
                     </label>
 
-                    <input type="hidden" name="customer" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="owner_id" value="{{Auth::user()->id}}">
                 </div>
 
 

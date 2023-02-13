@@ -103,13 +103,10 @@
             <nav class="nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="{{route('home')}}" class="nav__link">Мои задачи</a>
+                        <a href="{{route('tasks.index')}}" class="nav__link">Мои задачи</a>
                     </li>
                     <li class="nav__item">
                         <a href="{{route('users.index')}}" class="nav__link">Пользователи</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="{{route('tasks.index')}}" class="btn btn_blue btn_small">Сток задач</a>
                     </li>
                 </ul>
             </nav>

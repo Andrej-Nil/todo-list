@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('status')->default(0);
-            $table->integer('customer');
+            $table->integer('owner_id');
             $table->boolean('is_publish')->default(false);
             $table->boolean('is_important')->default(false);
             $table->boolean('is_urgent')->default(false);

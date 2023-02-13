@@ -26,8 +26,13 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $tasks = Task::find(Auth::user()->id)->get();
-            return view('home', compact('tasks'));
+//            $user_id = Auth::user()->id;
+//            $tasks = Task::whereHas('users', function($query) use($user_id){
+//                $query->where('user_id', $user_id );
+//            })->orWhere('customer', $user_id )->get();
+//            return view('home', compact('tasks'));
+
+            return to_route('tasks.index');
         }else{
             return view('landing');
         }

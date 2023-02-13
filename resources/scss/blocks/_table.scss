@@ -27,10 +27,6 @@
         width: 10px;
         height: 100%;
         background: #ff5e5e;
-        //height: 18px;
-        //background-image: url('../image/icon/exclamation.svg');
-        //background-repeat: no-repeat;
-        //background-size: contain;
         z-index: -1;
     }
 }
@@ -91,6 +87,14 @@
 
     &_clock{
         background-image: url('../image/icon/clock.svg');
+    }
+
+    &_run{
+        background-image: url('../image/icon/run.svg');
+    }
+
+    &_pause{
+        background-image: url('../image/icon/pause.svg');
     }
 
     &_important{

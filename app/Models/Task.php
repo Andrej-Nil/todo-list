@@ -15,7 +15,7 @@ class Task extends Model
         'title',
         'description',
         'status',
-        'customer',
+        'owner_id',
         'is_publish',
         'is_important',
         'is_urgent',
@@ -27,4 +27,10 @@ class Task extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function owner() {
+        return $this->belongsTo(User::class, 'owner_id', 'id');
+    }
+
+
 }

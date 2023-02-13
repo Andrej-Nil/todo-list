@@ -27,11 +27,11 @@ class TaskRequest extends FormRequest
             'title' =>['string', 'required'],
             'description'=>['string', 'required'],
             'status'=>['string', 'between:0,3'],
-            'customer'=>['integer', 'required'],
+            'owner_id'=>['integer', 'required'],
             'is_important'=>['integer', 'between:0,1'],
             'is_urgent'=>['integer', 'between:0,1'],
             'is_publish'=>['integer', 'between:0,1'],
-            'date_of_delivery'=>['date_format:Y-m-d'],
+            'date_of_delivery'=>['date_format:Y-m-d', 'nullable'],
         ];
     }
 }
