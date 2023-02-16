@@ -51,11 +51,13 @@
 
 .select__list {
     display: flex;
+    width: 100%;
     flex-direction: column;
     gap: 5px;
 }
 
 .select__item {
+
     padding: 5px 10px;
     cursor: pointer;
 }

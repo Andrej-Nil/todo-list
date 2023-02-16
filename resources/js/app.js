@@ -1,3 +1,48 @@
+class Service {
+    constructor() {
+        this.token = this.getToken();
+        this.taskAccept = '/tasks/accept'
+    }
+
+
+    acceptTask = (id) => {
+
+        // fetch('/tasks/accept', {
+        //     method: 'PUT',
+        //         headers: {
+        //             'X-CSRF-Token': this.token
+        //         },
+        // }).then((data) => data.json())
+        //     .then(data => console.log(data))
+
+        const body = {
+            id: id
+        }
+        console.log(body)
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'X-CSRF-Token': this.token
+            },
+            body:  JSON.stringify(body)
+        }
+
+        const data = this.getData(this.taskAccept, options);
+    }
+
+
+    getData = async (api, data) => {
+        fetch(api, data)
+            .then((data) => data.json())
+            .then((body) => console.log(body))
+    }
+
+    getToken() {
+        return document.querySelector('[name="csrf-token"]').content
+    }
+}
+
 class UserMenu {
     constructor(idUserBtn, idUserMenu) {
         this.$userBtn = document.querySelector(idUserBtn);
@@ -19,36 +64,101 @@ class UserMenu {
     }
 
     toggleMenu = (e) => {
-        if(e.target.closest('#userMenu')) return;
-        if(e.target.closest('#userBtn') && this.$userMenu.dataset.menuStatus === 'close'){
+        if (e.target.closest('#userMenu')) return;
+        if (e.target.closest('#userBtn') && this.$userMenu.dataset.menuStatus === 'close') {
             this.open();
             return;
         }
-        if(this.$userMenu.dataset.menuStatus === 'open'){
+        if (this.$userMenu.dataset.menuStatus === 'open') {
             this.close();
             return;
         }
     }
-
-
-    closeHandler = (e) => {
-        // const $target = e.target;
-        // if(this.$userMenu.dataset.menuStatus === 'close') return
-        // if($target.closest('#menuBtn')) return
-        this.close()
-    }
-    clickHandler = (e) => {
-        if(e.target.closest('#userBtn')){
-        }
-        // const $target = e.target;
-        // this.closeHandler($target);
-
-    }
-
 
     listeners = () => {
         document.addEventListener('click', this.toggleMenu);
     }
 }
 
+
+class Select {
+    constructor() {
+        this.init()
+
+    }
+
+    init() {
+        this.listeners()
+    }
+
+
+    open = ($select) => {
+        $select.classList.add('open');
+        $select.dataset.select = 'open';
+    }
+
+    close = ($select) => {
+        $select.classList.remove('open');
+        $select.dataset.select = 'close';
+    }
+
+
+    toggleSelect = ($select) => {
+
+        if ($select.dataset.select === 'open') {
+            this.close($select)
+        } else {
+            this.open($select)
+        }
+        // if(e.target.closest('[data-select-btn]')){
+        //     const $select = e.target.closest('[data-select]');
+        //     $select.classList.toggle('open');
+        // }
+    }
+
+    clickHandler = (e) => {
+
+        if (e.target.closest('[data-select-btn]')) {
+            this.toggleSelect(e.target.closest('[data-select]'))
+        }
+
+        if (!e.target.closest('[data-select-btn]')) {
+
+        }
+    }
+
+    listeners = () => {
+        document.addEventListener('click', this.clickHandler);
+    }
+}
+
+class Task{
+    constructor() {
+        this.init()
+    }
+
+    init = () => {
+        this.listeners();
+    }
+
+    acceptTask = async ($btnAccept) => {
+        const $task = $btnAccept.closest('[data-task-id]');
+        const id =  $task.dataset.taskId;
+        const response = await service.acceptTask(id);
+    }
+
+    clickHandler = (e) => {
+        if(e.target.closest('[data-assept]')){
+            this.acceptTask(e.target.closest('[data-assept]'))
+        }
+    }
+    listeners = () => {
+        document.addEventListener('click', this.clickHandler);
+    }
+}
+
+
+const service = new Service();
 const userMenu = new UserMenu('#userBtn', '#userMenu');
+const select = new Select();
+const task = new Task();

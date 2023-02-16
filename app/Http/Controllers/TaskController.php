@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function index() {
-        $tasks = Task::paginate(10);
+    public function index(Request $request) {
+
+        $userId = Auth::user()->id;
+
+
+        $tasks = Task::filter($request)->paginate(10);
         return view('tasks.index', compact('tasks'));
     }
 
@@ -21,54 +24,68 @@ class TaskController extends Controller
     }
 
     public function store(TaskRequest $request){
-        $task = Task::create($request->validated());
+        $request['owner_id'] = Auth::user()->id;
+        $task = Task::create($request->all());
         return to_route('tasks.show', $task);
     }
 
     public function show(Task $task) {
-//        $owner = $task->owner;
-//        $executors = $task->users;
-
 
         return view('tasks.show', compact('task'));
     }
 
-    public function edit($id) {
-        return view('tasks.edit');
+    public function edit(Task $task) {
+        return view('tasks.edit', compact('task'));
     }
 
-    public function update($id) {
-        return to_route('tasks.show', 5);
+    public function update(TaskRequest $request, Task $task) {
+        $task->update($request->all());
+        return to_route('tasks.show', $task);
     }
 
     public function destroy(Task $task) {
         $userId = Auth::user()->id;
-        if($userId == $task->customer){
+        if($userId == $task->owner_id){
             $task->delete();
             return to_route('tasks.index')->with('success', 'удалено');
         }
 
-        return to_back('error', 'У вас нет прав удалять эту задачу');
+        return back()->with('error', 'У вас нет прав удалять эту задачу');
 //
     }
 
 
-    public function accept(Task $task) {
+    public function accept(Request $request) {
         $userId = Auth::user()->id;
-
+        $taskId = $request->id;
+        $task = Task::find($taskId);
+            if(!$task){
+                return [
+                    'нет такой задачи'
+                ];
+            }
         if($task->is_publish){
             $users = $task->users;
             if(count($users)){
-                return back()->with('error', 'ошибка исользования');
+                return [
+                    'publish'
+                ];
+//                return back()->with('error', 'ошибка исользования');
             }
         }else{
-            if($task->customer !== $userId){
-                return back()->with('error', 'ошибка публичность');
+            if($task->owner_id !== $userId){
+                return [
+                    'owner'
+                ];
+//                return back()->with('error', 'ошибка публичность');
             }
         }
         $task->update(['status'=> 1]);
         $task->users()->attach(Auth::user());
-        return back()->with('success', 'Принята');
+        return [
+            'data'=>['type'=>'success']
+        ];
+//        return back()->with('success', 'Принята');
     }
 
     public function pause(Task $task) {

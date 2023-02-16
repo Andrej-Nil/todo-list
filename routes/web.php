@@ -25,7 +25,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
 
-    Route::put('/tasks/{task}/accept', [TaskController::class, 'accept'] )->name('tasks.accept');
+    Route::put('/tasks/accept', [TaskController::class, 'accept'] )->name('tasks.accept');
     Route::put('/tasks/{task}/pause', [TaskController::class, 'pause'] )->name('tasks.pause');
     Route::put('/tasks/{task}/completed', [TaskController::class, 'completed'] )->name('tasks.completed');
 

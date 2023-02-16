@@ -8,7 +8,7 @@
     @if($task->is_urgent)
         <div class="table__coll">
         <span class="table__btn btn btn_red">
-            <i class="table__btn-icon table__btn-icon_run" title="статус"></i>
+            <i class="table__btn-icon table__btn-icon_run" title="Срочное"></i>
         </span>
         </div>
     @endif
@@ -36,7 +36,7 @@
     <div class="table__coll">
         <div claas="table-info">
             <div class="table__btn btn btn_white">
-                <i class="table__btn-icon table__btn-icon_description" title="Важное"></i>
+                <i class="table__btn-icon table__btn-icon_description" title="Описание"></i>
                 <p class="table-info__desc">
                     {{$task->description}}
                 </p>

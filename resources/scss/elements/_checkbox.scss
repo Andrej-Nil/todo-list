@@ -1,13 +1,14 @@
 .checkbox{
     display: flex;
     align-items: center;
+
     justify-content: space-between;
 
     cursor: pointer;
     gap: 20px;
 }
 .checkbox__title{
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .checkbox__input{
@@ -22,8 +23,8 @@
             top: 50%;
             transform: translate(-50%, -50%);
             display: block;
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: #4375c9;
         }
     }

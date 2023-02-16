@@ -103,7 +103,7 @@
             <nav class="nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="{{route('tasks.index')}}" class="nav__link">Мои задачи</a>
+                        <a href="{{route('tasks.index')}}" class="nav__link">Задачи</a>
                     </li>
                     <li class="nav__item">
                         <a href="{{route('users.index')}}" class="nav__link">Пользователи</a>
@@ -111,51 +111,49 @@
                 </ul>
             </nav>
 
-        <div class="header-user">
-            <div id="userBtn" class="header-user__btn">
+            <div class="header-user">
+                <div id="userBtn" class="header-user__btn">
                 <span class="header-user__avatar avatar">
                     <img class="avatar__img" src="{{asset('/image/icon/user.svg')}}" alt="avatar">
                 </span>
 
-                <i class="header-user__arrow"></i>
-            </div>
-            <div id="userMenu" data-menu-status="close" class="header-menu">
-                <ul class="header-menu__list">
+                    <i class="header-user__arrow"></i>
+                </div>
+                <div id="userMenu" data-menu-status="close" class="header-menu">
+                    <ul class="header-menu__list">
 
                         <li class="header-menu__item">
                             <a href="{{ route('login') }}" class="header-menu__link">Профиль</a>
                         </li>
 
 
-                @if (Auth::user()->is_admin)
+                        @if (Auth::user()->is_admin)
                             <li class="header-menu__item">
                                 <span class="header-menu__link">admin</span>
 
                             </li>
 
-                @endif
+                        @endif
 
-                    <li class="header-menu__item">
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="header-menu__link header-menu__link_logout">Выход</button>
-                        </form>
-{{--                        <a href="{{ route('login') }}" class="header-menu__link">Профиль</a>--}}
-                    </li>
+                        <li class="header-menu__item">
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="header-menu__link header-menu__link_logout">Выход</button>
+                            </form>
+                            {{--                        <a href="{{ route('login') }}" class="header-menu__link">Профиль</a>--}}
+                        </li>
 
-            @else
+                        @else
 
-                <div class="header__login">
-                        <a href="{{ route('login') }}" class="btn btn_small btn_green">Вход</a>
-                        <a href="{{ route('register') }}" class="btn btn_small btn_blue">Регистрация</a>
+                            <div class="header__login">
+                                <a href="{{ route('login') }}" class="btn btn_small btn_green">Вход</a>
+                                <a href="{{ route('register') }}" class="btn btn_small btn_blue">Регистрация</a>
+                            </div>
+
+                        @endauth
+                    </ul>
                 </div>
-
-
-
-            @endauth
-                </ul>
             </div>
-        </div>
     </div>
 </header>
 <main class="container">

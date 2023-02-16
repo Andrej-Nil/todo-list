@@ -5,7 +5,10 @@
     <div class="top">
 
 
-        <h1 class="main-title">{{$task->title}}</h1>
+        <h1 class="main-title">
+            {{$task->title}}
+            {{$task->status == 3 ? '(выполнена)' : ''}}
+        </h1>
 
         @if(Auth::user()->id == $task->owner_id)
             <div class="top__controls">
@@ -17,12 +20,12 @@
                     <button class="btn btn_small btn_red">Удалить</button>
                 </form>
             </div>
-        @endif()
+        @endif
 
     </div>
 
     <div class="content">
-        <div class="task block">
+        <div data-task-id="{{$task->id}}" class="task block">
             <div class="task__content">
                 <p class="task__description">{{$task->description}}</p>
                 <div class="task-info">
@@ -88,46 +91,61 @@
 
 
             <div class="task__controls">
+
                 @if($task->status == 0)
-                    <form class="task__form" action="{{route('tasks.accept', $task)}}" method="POST">
-                        @csrf
-                        @method('put')
-                        <button type="submit" class="btn btn_blue btn_small">Приянть задачу</button>
-                    </form>
+                    <button data-assept class="btn btn_blue btn_small">Приянть задачу</button>
                 @elseif($task->status == 1)
-                    <form class="task__form" action="{{route('tasks.pause', $task)}}" method="POST">
-                        @csrf
-                        @method('put')
-                        <button type="submit" class="btn btn_yellow btn_small">Приостановить</button>
-                    </form>
-                    <form class="task__form" action="{{route('tasks.completed', $task)}}" method="POST">
-                        @csrf
-                        @method('put')
-                        <button type="submit" class="btn btn_green btn_small">Выполнено</button>
-                    </form>
+                    <button data-pause class="btn btn_yellow btn_small">Приостановить</button>
+                    <button data-complite class="btn btn_green btn_small">Выполнено</button>
                 @elseif($task->status == 2)
-                    <form class="task__form" action="{{route('tasks.pause', $task)}}" method="POST">
-                        @csrf
-                        @method('put')
-                        <button type="submit" class="btn btn_yellow btn_small">Продолжить</button>
-                    </form>
-                    <form class="task__form" action="{{route('tasks.completed', $task)}}" method="POST">
-                        @csrf
-                        @method('put')
-                        <button type="submit" class="btn btn_green btn_small">Выполнено</button>
-                    </form>
+                    <button data-pause class="btn btn_yellow btn_small">Продолжить</button>
+                    <button data-complite class="btn btn_green btn_small">Выполнено</button>
                 @endif
+
+{{--                @if($task->status == 0)--}}
+
+{{--                    <form class="task__form" action="{{route('tasks.accept', $task)}}" method="POST">--}}
+{{--                        @csrf--}}
+{{--                        @method('put')--}}
+{{--                        <button type="submit" class="btn btn_blue btn_small">Приянть задачу</button>--}}
+{{--                    </form>--}}
+
+{{--                @elseif($task->status == 1)--}}
+{{--                    <form class="task__form" action="{{route('tasks.pause', $task)}}" method="POST">--}}
+{{--                        @csrf--}}
+{{--                        @method('put')--}}
+{{--                        <button type="submit" class="btn btn_yellow btn_small">Приостановить</button>--}}
+{{--                    </form>--}}
+{{--                    <form class="task__form" action="{{route('tasks.completed', $task)}}" method="POST">--}}
+{{--                        @csrf--}}
+{{--                        @method('put')--}}
+{{--                        <button type="submit" class="btn btn_green btn_small">Выполнено</button>--}}
+{{--                    </form>--}}
+
+{{--                @elseif($task->status == 2)--}}
+{{--                    <form class="task__form" action="{{route('tasks.pause', $task)}}" method="POST">--}}
+{{--                        @csrf--}}
+{{--                        @method('put')--}}
+{{--                        <button type="submit" class="btn btn_yellow btn_small">Продолжить</button>--}}
+{{--                    </form>--}}
+{{--                    <form class="task__form" action="{{route('tasks.completed', $task)}}" method="POST">--}}
+{{--                        @csrf--}}
+{{--                        @method('put')--}}
+{{--                        <button type="submit" class="btn btn_green btn_small">Выполнено</button>--}}
+{{--                    </form>--}}
+{{--                @endif--}}
 
             </div>
         </div>
-        @if (Session::has($error ?? 'error'))
-            <div class="alert alert-danger">
-                <p style="margin-bottom: 0;">{{ Session::get($error ?? 'error') }}</p>
-            </div>
-        @endif
-        @if (Session::has($success ?? 'success'))
-            <div class="alert alert-success">
-                <p style="margin-bottom: 0;">{{ Session::get($success ?? 'success') }}</p>
-            </div>
-    @endif
+    </div>
+{{--        @if (Session::has($error ?? 'error'))--}}
+{{--            <div class="alert alert-danger">--}}
+{{--                <p style="margin-bottom: 0;">{{ Session::get($error ?? 'error') }}</p>--}}
+{{--            </div>--}}
+{{--        @endif--}}
+{{--        @if (Session::has($success ?? 'success'))--}}
+{{--            <div class="alert alert-success">--}}
+{{--                <p style="margin-bottom: 0;">{{ Session::get($success ?? 'success') }}</p>--}}
+{{--            </div>--}}
+{{--    @endif--}}
 @endsection
