@@ -7,8 +7,8 @@
         <h1 class="main-title">Профиль</h1>
 
         <div class="top__controls">
-            <a href="{{route('users.edit', 5)}}" class="btn btn_yellow btn_small">Редоктирование</a>
-            <form action="{{route('users.destroy', 5)}}" method="POST">
+            <a href="{{route('users.edit', $user->id)}}" class="btn btn_yellow btn_small">Редоктирование</a>
+            <form action="{{route('users.destroy', $user->id)}}" method="POST">
                 @csrf
                 @method('delete')
                 <button class="btn btn_small btn_red">Удалить</button>
@@ -48,7 +48,18 @@
             <div class="user-tasks__top">
                 <div class="user-tasks__title">Список задач</div>
             </div>
+{{--            @forelse($tasks as $tasksGroup)--}}
+{{--                <ul class="user__list">--}}
+{{--                    @forelse($tasksGroup as $task)--}}
 
+{{--                    @empty--}}
+{{--                        Нет задач--}}
+{{--                    @endforelse--}}
+{{--                </ul>--}}
+
+{{--            @empty--}}
+{{--                Нет задач--}}
+{{--            @endforelse--}}
             <div class="user-tasks__group">
                 <p class="user-tasks__subtitle">Активные</p>
                 <div class="table">
