@@ -23,11 +23,20 @@ class UserController extends Controller
         })->get();
 
         $tasks = [
-            'owner' => $tasksList->where('owner_id', $userId),
-            'active' => $tasksList->whereIn('status', [1, 2]),
-            'completed' => $tasksList->where('status', 3),
+            [
+                'name_group'=>'Активные',
+                'tasks'=>$tasksList->whereIn('status', [1, 2])
+            ],
+            [
+                'name_group'=>'Завершонные',
+                'tasks'=>$tasksList->where('status', 3)
+            ],
+            [
+                'name_group'=>'Созданные задачи',
+                'tasks'=>$tasksList->where('owner_id', $userId)
+            ],
         ];
-
+//dd($tasks);
         return view('users.show', compact('tasks', 'user'));
     }
 

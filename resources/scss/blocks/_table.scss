@@ -29,6 +29,11 @@
         background: #ff5e5e;
         z-index: -1;
     }
+    &_empty{
+        padding: 0 20px;
+        background: #f5f5f5;
+        align-items: center;
+    }
 }
 
 .table__coll{
@@ -103,6 +108,12 @@
 
     &_description{
         background-image: url('../image/icon/desc.svg');
+    }
+    &_private{
+        background-image: url('../image/icon/disable.svg');
+    }
+    &_publish{
+        background-image: url('../image/icon/display.svg');
     }
 }
 

@@ -44,33 +44,19 @@ class Task extends Model
         $active = $request['active'];
         $pause = $request['pause'];
         $complete = $request['complete'];
-//        orWhere('owner_id', $userId)->
-//        where('is_publish', 1)->
 
-
-//        if($area){
-//            switch ($area){
-//                case('stack'):{
-//
-//                }
-//                case('work'):{
-//
-//                }
-//                case('create'):{
-//
-//                }
-//            }
-//        }
         if ($area) {
             if ($area == 'stack') {
-                $query->where('owner_id', $userId)
-                    ->orWhere('is_publish', 1)
-                    ->orWhere(function ($query) use ($userId) {
-                        $query->where([
-                                ['is_publish', 0],
-                                ['owner_id', $userId]
-                            ]);
-                    });
+                $query->where('is_publish', 1)
+                    ->orWhere('owner_id', $userId);
+//                $query->where('owner_id', $userId)
+//                    ->orWhere('is_publish', 1)
+//                    ->orWhere(function ($query) use ($userId) {
+//                        $query->where([
+//                                ['is_publish', 0],
+//                                ['owner_id', $userId]
+//                            ]);
+//                    });
             } elseif ($area == 'work') {
                 $query->whereHas('users', function ($query) use ($userId) {
                     $query->where('user_id', $userId);
@@ -121,12 +107,6 @@ class Task extends Model
             });
         }
 
-//        if ($request['active']) {
-//
-//        }
-//        if ($request['complete']) {
-//            $query->where('status', 3);
-//        }
     }
 
 

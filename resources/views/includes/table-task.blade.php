@@ -33,6 +33,22 @@
 
     </div>
 
+    @if($task->is_publish == 0)
+        <div class="table__coll">
+            <div class="table__btn btn " title="Приватная">
+                <i class="table__btn-icon table__btn-icon_private"></i>
+            </div>
+        </div>
+    @endif
+
+    @if($task->is_publish == 1)
+        <div class="table__coll">
+            <div class="table__btn btn " title="Приватная">
+                <i class="table__btn-icon table__btn-icon_publish"></i>
+            </div>
+        </div>
+    @endif
+
     <div class="table__coll">
         <div claas="table-info">
             <div class="table__btn btn btn_white">
@@ -44,11 +60,11 @@
         </div>
 
     </div>
-{{--    <div class="table__coll">--}}
-        {{--        <a href="{{route('home')}}" class="table__btn btn btn_yellow">--}}
-        {{--            <i class="table__btn-icon table__btn-icon_important" title="Важное"></i>--}}
-        {{--        </a>--}}
-{{--    </div>--}}
+    {{--    <div class="table__coll">--}}
+    {{--        <a href="{{route('home')}}" class="table__btn btn btn_yellow">--}}
+    {{--            <i class="table__btn-icon table__btn-icon_important" title="Важное"></i>--}}
+    {{--        </a>--}}
+    {{--    </div>--}}
 
     {{--    <div class="table__coll">--}}
     {{--        <a href="{{route('home')}}" class="table__btn btn btn_blue">--}}
