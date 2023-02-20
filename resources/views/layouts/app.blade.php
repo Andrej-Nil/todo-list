@@ -32,7 +32,7 @@
                     </li>
                 </ul>
             </nav>
-{{Auth::user()->name}}
+            {{Auth::user()->name}}
             <div class="header-user">
                 <div id="userBtn" class="header-user__btn">
                 <span class="header-user__avatar avatar">
@@ -62,7 +62,6 @@
                                 @csrf
                                 <button type="submit" class="header-menu__link header-menu__link_logout">Выход</button>
                             </form>
-                            {{--                        <a href="{{ route('login') }}" class="header-menu__link">Профиль</a>--}}
                         </li>
 
                         @else
@@ -78,11 +77,16 @@
             </div>
     </div>
 </header>
-<main class="container">
-
+<main class="main">
+<div class="container">
 
     @yield('content')
+</div>
 </main>
+
+<footer class="footer">
+
+</footer>
 
 @vite(['resources/js/app.js'])
 </body>

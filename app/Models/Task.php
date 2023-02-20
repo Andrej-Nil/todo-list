@@ -45,25 +45,24 @@ class Task extends Model
         $pause = $request['pause'];
         $complete = $request['complete'];
 
-        if ($area) {
-            if ($area == 'stack') {
-                $query->where('is_publish', 1)
-                    ->orWhere('owner_id', $userId);
-//                $query->where('owner_id', $userId)
-//                    ->orWhere('is_publish', 1)
-//                    ->orWhere(function ($query) use ($userId) {
-//                        $query->where([
-//                                ['is_publish', 0],
-//                                ['owner_id', $userId]
-//                            ]);
-//                    });
-            } elseif ($area == 'work') {
-                $query->whereHas('users', function ($query) use ($userId) {
-                    $query->where('user_id', $userId);
-                });
-            } elseif ($area == 'create') {
-                $query->where('owner_id', $userId);
-            }
+        if ($area == 'work') {
+            $query->whereHas('users', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            });
+        } elseif ($area == 'create') {
+            $query->where('owner_id', $userId);
+        } else {
+
+            $query->where(function ($query) use ($userId) {
+                $query->where('owner_id', $userId)
+                    ->orWhere(function ($query) use ($userId) {
+                        $query->where([
+                            ['is_publish', 0],
+                            ['owner_id', $userId]
+                        ])->orWhere('is_publish', 1);
+                    });
+            });
+
         }
 
         if ($request['search']) {
@@ -76,7 +75,6 @@ class Task extends Model
             $pause ||
             $important ||
             $urgent
-
         ) {
             $query->where(function ($query) use (
                 $waiting,

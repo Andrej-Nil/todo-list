@@ -102,6 +102,11 @@ class Select {
         $select.dataset.select = 'close';
     }
 
+    closeAll = () => {
+        const $selectList = document.querySelectorAll('[data-select]');
+        $selectList.forEach( ($select) =>  this.close($select));
+    }
+
 
     toggleSelect = ($select) => {
 
@@ -116,6 +121,13 @@ class Select {
         // }
     }
 
+    changeTitle = ($input) => {
+        const $select = $input.closest('[data-select]');
+        const $selectTitle = $select.querySelector('[data-select-title]');
+        const title = $input.dataset.label;
+        $selectTitle.innerHTML = title;
+    }
+
     clickHandler = (e) => {
 
         if (e.target.closest('[data-select-btn]')) {
@@ -123,12 +135,19 @@ class Select {
         }
 
         if (!e.target.closest('[data-select-btn]')) {
+            this.closeAll();
+        }
+    }
 
+    changeHandler = (e) => {
+        if(e.target.closest('[data-select]')){
+            this.changeTitle(e.target)
         }
     }
 
     listeners = () => {
         document.addEventListener('click', this.clickHandler);
+        document.addEventListener('change', this.changeHandler);
     }
 }
 

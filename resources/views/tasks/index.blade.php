@@ -8,7 +8,8 @@
     </div>
 
     <div class="search block">
-        <input form="filter" class="search__input input" type="text" placeholder="Поиск" value="{{$_GET['search'] ?? ''}}" name="search">
+        <input form="filter" class="search__input input" type="text" placeholder="Поиск"
+               value="{{$_GET['search'] ?? ''}}" name="search">
         <button type="submit" form="filter" class="search-btn btn btn_blue">
             <i class="search-btn__icon"></i>
         </button>
@@ -17,17 +18,18 @@
 
         <div class="table block">
 
-                <div class="table__content">
-                    @forelse($tasks as $task)
-                        @include('includes.table-task')
-                    @empty
-                        <div class="table-message">
-                            <p class="table-message__title">В стоке пока нет задач.</p>
-                            <p class="table-message__text">
-                                Вы можете создать <a href="{{route('tasks.create')}}" class="link">задачу</a> добавив ее в сток
-                            </p>
-                        </div>
-                    @endforelse
+            <div class="table__content">
+                @forelse($tasks as $task)
+                    @include('includes.table-task')
+                @empty
+                    <div class="table-message">
+                        <p class="table-message__title">В стоке пока нет задач.</p>
+                        <p class="table-message__text">
+                            Вы можете создать <a href="{{route('tasks.create')}}" class="link">задачу</a> добавив ее в
+                            сток
+                        </p>
+                    </div>
+                @endforelse
 
             </div>
         </div>
@@ -35,12 +37,12 @@
             <form id="filter" action="{{route('tasks.index')}}" method="GET" class="form">
                 @csrf
                 <div class="form__inputs">
-                    <div class="select">
-                        <div class="select__top">
-                            <p class="select__title">Сначало новые</p>
+                    <div data-select="close" class="select">
+                        <div data-select-btn class="select__top">
+                            <p data-select-title class="select__title">Сначало новые</p>
                             <i class="select__arrow"></i>
                         </div>
-                        <div class="select__dropdown">
+                        <div data-dropdown class="select__dropdown">
                             <ul class="select__list">
                                 <li class="select__item">
                                     <label class="checkbox">
@@ -77,13 +79,13 @@
                         </div>
                     </div>
 
-                    <div class="select">
+                    <div data-select="close" class="select">
 
-                        <div class="select__top">
-                            <p class="select__title"> Отображать: 10</p>
+                        <div data-select-btn class="select__top">
+                            <p data-select-title class="select__title"> Отображать: 10</p>
                             <i class="select__arrow"></i>
                         </div>
-                        <div class="select__dropdown">
+                        <div data-dropdown class="select__dropdown">
                             <ul class="select__list">
                                 <li class="select__item">
                                     <label class="checkbox">
@@ -123,7 +125,7 @@
                     <div data-select="close" class="select">
 
                         <div data-select-btn class="select__top">
-                            <p data-title class="select__title"> Все </p>
+                            <p data-select-title class="select__title"> Все </p>
                             <i class="select__arrow"></i>
                         </div>
                         <div data-dropdown class="select__dropdown">
@@ -131,16 +133,18 @@
 
                                 <li class="select__item">
                                     <label class="checkbox">
-                                        <span class="checkbox__title"> Все </span>
-                                        <input class="checkbox__input" name="area" value="stack" type="radio" @checked(!empty($_GET['area']) ? ($_GET['area'] == 'stack') : 1)/>
+                                        <span class="checkbox__title">Все</span>
+                                        <input class="checkbox__input" data-label="Все" name="area" value="stack"
+                                               type="radio" @checked(!empty($_GET['area']) ? ($_GET['area'] == 'stack') : 1)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>
 
                                 <li class="select__item">
                                     <label class="checkbox">
-                                        <span class="checkbox__title"> Мои задачи</span>
-                                        <input class="checkbox__input" name="area" value="work" type="radio" @checked(!empty($_GET['area']) ? ($_GET['area'] == 'work') : 0)/>
+                                        <span class="checkbox__title">Мои задачи</span>
+                                        <input class="checkbox__input" data-label="Мои задачи" name="area" value="work"
+                                               type="radio" @checked(!empty($_GET['area']) ? ($_GET['area'] == 'work') : 0)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>
@@ -148,7 +152,8 @@
                                 <li class="select__item">
                                     <label class="checkbox">
                                         <span class="checkbox__title"> Созданные </span>
-                                        <input class="checkbox__input" name="area" value="create" type="radio" @checked(!empty($_GET['area']) ? ($_GET['area'] == 'create') : 0)/>
+                                        <input class="checkbox__input" data-label="Созданные" name="area" value="create"
+                                               type="radio" @checked(!empty($_GET['area']) ? ($_GET['area'] == 'create') : 0)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>
@@ -169,7 +174,8 @@
                         <span class="checkbox__title">
                             Важные
                         </span>
-                        <input class="checkbox__input" type="checkbox" name="important" @checked($_GET['important'] ?? '')/>
+                        <input class="checkbox__input" type="checkbox"
+                               name="important" @checked($_GET['important'] ?? '')/>
                         <span class="checkbox__fake"></span>
                     </label>
 
@@ -202,7 +208,8 @@
                         <span class="checkbox__title">
                             Завершонные
                         </span>
-                        <input class="checkbox__input" type="checkbox" name="complete" @checked($_GET['complete'] ?? '')/>
+                        <input class="checkbox__input" type="checkbox"
+                               name="complete" @checked($_GET['complete'] ?? '')/>
                         <span class="checkbox__fake"></span>
                     </label>
 
@@ -212,7 +219,5 @@
             </form>
         </div>
     </div>
-
-
 
 @endsection
