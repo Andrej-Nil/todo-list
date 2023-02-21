@@ -93,6 +93,7 @@ class Select {
 
 
     open = ($select) => {
+        this.closeAll();
         $select.classList.add('open');
         $select.dataset.select = 'open';
     }

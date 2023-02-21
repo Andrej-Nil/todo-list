@@ -112,16 +112,18 @@ class Task extends Model
     {
         $sortType = 'created_at';
         $sortValue = 'DESC';
-        if (!empty($request['sort'])) {
-            $sort = $request['sort'];
-            if ($sort == 1) {
-                $sortValue = 'ASC';
-            } else if ($sort == 2) {
-                $sortType = 'title';
-                $sortValue = 'ASC';
-            } else if ($sort == 3) {
+        if (!empty($request['sorting'])) {
+
+            $sort = $request['sorting'];
+
+            if ($sort == 'important') {
+                $sortType = 'is_important';
+            } else if ($sort == 'urgent') {
+                $sortType = 'is_urgent';
+            } else if ($sort == 'abc') {
                 $sortType = 'title';
             }
+
         }
         $query->orderBy($sortType, $sortValue);
     }

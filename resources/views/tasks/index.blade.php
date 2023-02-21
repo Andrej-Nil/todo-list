@@ -39,42 +39,57 @@
                 <div class="form__inputs">
                     <div data-select="close" class="select">
                         <div data-select-btn class="select__top">
-                            <p data-select-title class="select__title">Сначало новые</p>
+                            <p data-select-title class="select__title">Сначала новые</p>
                             <i class="select__arrow"></i>
                         </div>
                         <div data-dropdown class="select__dropdown">
                             <ul class="select__list">
                                 <li class="select__item">
                                     <label class="checkbox">
+                                        <span class="checkbox__title"> Сначала новые </span>
+                                        <input class="checkbox__input" data-label="Сначала новые" name="sorting" value="new"
+                                               type="radio" @checked(!empty($_GET['sorting']) ? ($_GET['sorting'] == 'new') : 1)/>
+                                        <span class="checkbox__fake"></span>
+                                    </label>
+                                </li>
+                                <li class="select__item">
+                                    <label class="checkbox">
+                                        <span class="checkbox__title"> Сначала важные </span>
+                                        <input class="checkbox__input" data-label="Сначало важные" name="sorting" value="important"
+                                               type="radio" @checked(!empty($_GET['sorting']) ? ($_GET['sorting'] == 'important') : 0)/>
+                                        <span class="checkbox__fake"></span>
+                                    </label>
+                                </li>
+
+
+                                <li class="select__item">
+                                    <label class="checkbox">
+                                        <span class="checkbox__title"> Сначала срочные</span>
+                                        <input class="checkbox__input" data-label="Сначала срочные" name="sorting" value="urgent"
+                                               type="radio" @checked(!empty($_GET['sorting']) ? ($_GET['sorting'] == 'urgent') : 0)/>
+                                        <span class="checkbox__fake"></span>
+                                    </label>
+                                </li>
+
+                                <li class="select__item">
+                                    <label class="checkbox">
                                         <span class="checkbox__title"> От А да Я </span>
-                                        <input class="checkbox__input" name="sorting" value="1" type="radio"/>
+                                        <input class="checkbox__input" data-label="От А да Я" name="sorting" value="abc"
+                                               type="radio" @checked(!empty($_GET['sorting']) ? ($_GET['sorting'] == 'abc') : 0)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>
 
                                 <li class="select__item">
                                     <label class="checkbox">
-                                        <span class="checkbox__title"> Сначало важные </span>
-                                        <input class="checkbox__input" name="sorting" value="2" type="radio"/>
+                                        <span class="checkbox__title"> По дате </span>
+                                        <input class="checkbox__input" data-label="По дате" name="sorting" value="data"
+                                               type="radio" @checked(!empty($_GET['sorting']) ? ($_GET['sorting'] == 'data') : 0)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>
 
-                                <li class="select__item">
-                                    <label class="checkbox">
-                                        <span class="checkbox__title"> Сначало новые </span>
-                                        <input class="checkbox__input" name="sorting" value="3" type="radio"/>
-                                        <span class="checkbox__fake"></span>
-                                    </label>
-                                </li>
 
-                                <li class="select__item">
-                                    <label class="checkbox">
-                                        <span class="checkbox__title"> Сначало старые </span>
-                                        <input class="checkbox__input" name="sorting" value="4" type="radio"/>
-                                        <span class="checkbox__fake"></span>
-                                    </label>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -82,7 +97,7 @@
                     <div data-select="close" class="select">
 
                         <div data-select-btn class="select__top">
-                            <p data-select-title class="select__title"> Отображать: 10</p>
+                            <p data-select-title class="select__title"> Отображать: 20</p>
                             <i class="select__arrow"></i>
                         </div>
                         <div data-dropdown class="select__dropdown">
@@ -90,7 +105,8 @@
                                 <li class="select__item">
                                     <label class="checkbox">
                                         <span class="checkbox__title"> 20 </span>
-                                        <input class="checkbox__input" name="sorting" value="1" type="radio"/>
+                                        <input class="checkbox__input" data-label="Отображать: 20" name="limit" value="20"
+                                               type="radio" @checked(!empty($_GET['limit']) ? ($_GET['limit'] == '20') : 1)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>
@@ -98,7 +114,8 @@
                                 <li class="select__item">
                                     <label class="checkbox">
                                         <span class="checkbox__title"> 40 </span>
-                                        <input class="checkbox__input" name="sorting" value="2" type="radio"/>
+                                        <input class="checkbox__input" data-label="Отображать: 40" name="limit" value="40"
+                                               type="radio" @checked(!empty($_GET['limit']) ? ($_GET['limit'] == '40') : 0)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>
@@ -106,7 +123,8 @@
                                 <li class="select__item">
                                     <label class="checkbox">
                                         <span class="checkbox__title"> 60 </span>
-                                        <input class="checkbox__input" name="sorting" value="3" type="radio"/>
+                                        <input class="checkbox__input" data-label="Отображать: 60" name="limit" value="60"
+                                               type="radio" @checked(!empty($_GET['limit']) ? ($_GET['limit'] == '60') : 0)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>
@@ -114,7 +132,8 @@
                                 <li class="select__item">
                                     <label class="checkbox">
                                         <span class="checkbox__title"> 100 </span>
-                                        <input class="checkbox__input" name="sorting" value="4" type="radio"/>
+                                        <input class="checkbox__input" data-label="Отображать: 100" name="limit" value="100"
+                                               type="radio" @checked(!empty($_GET['limit']) ? ($_GET['limit'] == '100') : 0)/>
                                         <span class="checkbox__fake"></span>
                                     </label>
                                 </li>

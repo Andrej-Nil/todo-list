@@ -82,6 +82,10 @@
                             <a href="{{route('users.show', $task->owner->id)}}"
                                class="task-info__value link">{{$task->owner->name}}</a>
                         </li>
+                        <li class="task-info__item">
+                            <span class="task-info__label">Дата создания</span>
+                            <span class="task-info__value">{{$task->created_at->format('d-m-Y')}}</span>
+                        </li>
                     </ul>
 
 
