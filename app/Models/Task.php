@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\StatusHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,6 +34,13 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getStatusLabelAttribute(){
+       return StatusHelper::getName($this->status);
+    }
+
+
+
 
     public function scopeFilter($query, $request)
     {
@@ -122,6 +130,7 @@ class Task extends Model
                 $sortType = 'is_urgent';
             } else if ($sort == 'abc') {
                 $sortType = 'title';
+                $sortValue = 'ASC';
             }
 
         }

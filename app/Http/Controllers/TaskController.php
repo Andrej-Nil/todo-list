@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\StatusHelper;
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -33,7 +34,6 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
-
         return view('tasks.show', compact('task'));
     }
 

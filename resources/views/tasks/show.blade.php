@@ -33,16 +33,7 @@
                         <li class="task-info__item">
                             <span class="task-info__label">Статус</span>
                             <span class="task-info__value">
-                                @if($task->status == 1)
-                                    В работе
-                                @elseif($task->status == 2)
-                                    Приостановлина
-                                @elseif($task->status == 3)
-                                    Исполнена
-                                @else
-                                    В ожидании
-                                @endif
-
+                                {{$task->status_label}}
                             </span>
                         </li>
                         <li class="task-info__item">
