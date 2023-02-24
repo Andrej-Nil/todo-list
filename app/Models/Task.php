@@ -47,8 +47,7 @@ class Task extends Model
 
         if ($area) {
             if ($area == 'stack') {
-                $query->where('is_publish', 1)
-                    ->orWhere('owner_id', $userId);
+//                $query->all();
 //                $query->where('owner_id', $userId)
 //                    ->orWhere('is_publish', 1)
 //                    ->orWhere(function ($query) use ($userId) {
