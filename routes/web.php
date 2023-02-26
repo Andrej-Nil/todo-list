@@ -4,6 +4,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Resources\TaskResource;
+use \App\Models\Task;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,11 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
+//    Route::post('/tasks/{task}', [TaskController::class, 'showInfo'] )->name('tasks.showInfo');
+    Route::post('/tasks/{task}', function ($task){
+        return new TaskResource(Task::findOrFail($task));
+    });
+
 
     Route::put('/tasks/accept', [TaskController::class, 'accept'] )->name('tasks.accept');
     Route::put('/tasks/{task}/pause', [TaskController::class, 'pause'] )->name('tasks.pause');

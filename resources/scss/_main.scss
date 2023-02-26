@@ -16,11 +16,17 @@ ul, li{
     list-style-type: none;
 }
 
+html, body{
+    height: 100%;
+}
+
 body{
+    display: flex;
+    flex-direction: column;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     color: #1a202c;
-    background: #f5f5f5;
+
 }
 
 textarea{
@@ -29,8 +35,19 @@ textarea{
 
 }
 
+.app{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background: #f5f5f5;
+}
+
 .main{
     margin-bottom: 30px;
+}
+
+.scroll-off{
+    overflow: hidden;
 }
 
 

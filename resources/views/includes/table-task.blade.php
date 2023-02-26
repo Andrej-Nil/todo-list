@@ -14,19 +14,19 @@
     @endif
     <div class="table__coll">
         @if($task->status == 1)
-            <div class="table__btn btn btn_blue" title="В работе">
+            <div class="table__btn btn btn_blue" title="{{$task->status_label}}">
                 <i class="table__btn-icon table__btn-icon_clock"></i>
             </div>
         @elseif($task->status == 2)
-            <div class="table__btn btn btn_yellow" title="Приостановленна">
+            <div class="table__btn btn btn_yellow" title="{{$task->status_label}}">
                 <i class="table__btn-icon table__btn-icon_pause"></i>
             </div>
         @elseif($task->status == 3)
-            <div class="table__btn btn btn_green" title="Выполнена">
+            <div class="table__btn btn btn_green" title="{{$task->status_label}}">
                 <i class="table__btn-icon table__btn-icon_complete"></i>
             </div>
         @else
-            <div class="table__btn btn" title="В ожидании">
+            <div class="table__btn btn" title="{{$task->status_label}}">
                 <i class="table__btn-icon table__btn-icon_clock"></i>
             </div>
         @endif
@@ -50,30 +50,8 @@
     @endif
 
     <div class="table__coll">
-        <div claas="table-info">
-            <div class="table__btn btn btn_white">
-                <i class="table__btn-icon table__btn-icon_description" title="Описание"></i>
-                <p class="table-info__desc">
-                    {{$task->description}}
-                </p>
-            </div>
+        <div data-show-info="{{$task->id}}" class="table__btn btn btn_white">
+            <i class="table__btn-icon table__btn-icon_description" title="Описание"></i>
         </div>
-
     </div>
-    {{--    <div class="table__coll">--}}
-    {{--        <a href="{{route('home')}}" class="table__btn btn btn_yellow">--}}
-    {{--            <i class="table__btn-icon table__btn-icon_important" title="Важное"></i>--}}
-    {{--        </a>--}}
-    {{--    </div>--}}
-
-    {{--    <div class="table__coll">--}}
-    {{--        <a href="{{route('home')}}" class="table__btn btn btn_blue">--}}
-    {{--            <i class="table__btn-icon table__btn-icon_edit" title="Редостировать"></i>--}}
-    {{--        </a>--}}
-    {{--    </div>--}}
-    {{--    <div class="table__coll">--}}
-    {{--        <a href="{{route('home')}}" class="table__btn btn btn_red">--}}
-    {{--            <i class="table__btn-icon table__btn-icon_delete" title="удалить"></i>--}}
-    {{--        </a>--}}
-    {{--    </div>--}}
 </div>

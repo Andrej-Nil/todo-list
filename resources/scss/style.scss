@@ -2,6 +2,10 @@
 @import "main";
 @import "containers";
 
+
+
+@import "skeletons/task-sceleton";
+
 @import "elements/logo";
 @import "elements/avatar";
 @import "elements/main-title";
@@ -20,6 +24,7 @@
 @import "./blocks/header-user";
 @import "./blocks/header-menu";
 @import "./blocks/top";
+@import "./blocks/about";
 @import "./blocks/search";
 @import "./blocks/table";
 @import "./blocks/table-message";
@@ -33,3 +38,6 @@
 @import "./blocks/user-tasks";
 @import "./blocks/user-edit";
 @import "./blocks/footer";
+@import "./blocks/modal";
+
+@import "effets/shine";

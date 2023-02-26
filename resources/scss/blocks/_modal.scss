@@ -1,0 +1,38 @@
+.modal{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1000;
+    &.open{
+        .modal__blackout{
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .modal__body{
+            transform: translateY(calc(0% + 150px));
+        }
+    }
+
+    &.forefront{
+        z-index: 1000;
+    }
+}
+
+
+.modal__blackout{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.2s ease-in-out;
+    background: rgba(0, 0, 0, 0.0);
+    cursor: pointer;
+}
+.modal__body {
+    transition: 0.2s ease-in-out;
+    position: relative;
+    transform: translateY(-100%);
+}

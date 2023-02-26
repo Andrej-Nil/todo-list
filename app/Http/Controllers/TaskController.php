@@ -27,8 +27,9 @@ class TaskController extends Controller
     {
         $request['owner_id'] = Auth::user()->id;
         $task = Task::create($request->all());
-
-        $task->users()->attach(Auth::user());
+        if ($request->status) {
+            $task->users()->attach(Auth::user());
+        }
         return to_route('tasks.show', $task);
     }
 
@@ -60,72 +61,82 @@ class TaskController extends Controller
 //
     }
 
-
-    public function accept(Request $request)
+    public function showInfo(Task $task)
     {
-        $userId = Auth::user()->id;
-        $taskId = $request->id;
-        $task = Task::find($taskId);
-        if (!$task) {
-            return [
-                'нет такой задачи'
-            ];
-        }
-        if ($task->is_publish) {
-            $users = $task->users;
-            if (count($users)) {
-                return [
-                    'publish'
-                ];
-//                return back()->with('error', 'ошибка исользования');
-            }
-        } else {
-            if ($task->owner_id !== $userId) {
-                return [
-                    'owner'
-                ];
-//                return back()->with('error', 'ошибка публичность');
-            }
-        }
-        $task->update(['status' => 1]);
-        $task->users()->attach(Auth::user());
+        $owner_name = $task->owner()->name;
+        $task['owner_name'] = $owner_name;
         return [
-            'data' => ['type' => 'success']
+            'status' => 'success',
+
         ];
-//        return back()->with('success', 'Принята');
     }
 
-    public function pause(Task $task)
-    {
 
-        if ($task->status == 0) {
-            return back()->with('error', 'Задача не выполняеться');
-        }
-        if ($task->status == 1) {
-            $task->update(['status' => 2]);
-            return back()->with('success', 'Задача приостановлина');
-        }
-        if ($task->status == 2) {
-            $task->update(['status' => 1]);
-            return back()->with('error', 'Выполенеие продолжено');
-        }
-        if ($task->status == 3) {
-            return back()->with('error', 'Задача уже завершина');
-        }
-
-    }
-
-    public function completed(Task $task)
-    {
-        if ($task->status == 0) {
-            return back()->with('error', 'Задача не выполняеться');
-        }
-        if ($task->status == 1 || $task->status == 2) {
-            $task->update(['status' => 3]);
-            return back()->with('success', 'Задача выполнена');
-        }
-        if ($task->status == 3) {
-            return back()->with('error', 'Задача уже завершина');
-        }
-    }
+//    public function accept(Request $request)
+//    {
+//        $userId = Auth::user()->id;
+//        $taskId = $request->id;
+//        $task = Task::find($taskId);
+//        if (!$task) {
+//            return [
+//                'нет такой задачи'
+//            ];
+//        }
+//        if ($task->is_publish) {
+//            $users = $task->users;
+//            if (count($users)) {
+//                return [
+//                    'publish'
+//                ];
+////                return back()->with('error', 'ошибка исользования');
+//            }
+//        } else {
+//            if ($task->owner_id !== $userId) {
+//                return [
+//                    'owner'
+//                ];
+////                return back()->with('error', 'ошибка публичность');
+//            }
+//        }
+//        $task->update(['status' => 1]);
+//        $task->users()->attach(Auth::user());
+//        return [
+//            'data' => ['type' => 'success']
+//        ];
+////        return back()->with('success', 'Принята');
+//    }
+//
+//    public function pause(Task $task)
+//    {
+//
+//        if ($task->status == 0) {
+//            return back()->with('error', 'Задача не выполняеться');
+//        }
+//        if ($task->status == 1) {
+//            $task->update(['status' => 2]);
+//            return back()->with('success', 'Задача приостановлина');
+//        }
+//        if ($task->status == 2) {
+//            $task->update(['status' => 1]);
+//            return back()->with('error', 'Выполенеие продолжено');
+//        }
+//        if ($task->status == 3) {
+//            return back()->with('error', 'Задача уже завершина');
+//        }
+//
+//    }
+//
+//    public function completed(Task $task)
+//    {
+//        if ($task->status == 0) {
+//            return back()->with('error', 'Задача не выполняеться');
+//        }
+//        if ($task->status == 1 || $task->status == 2) {
+//            $task->update(['status' => 3]);
+//            return back()->with('success', 'Задача выполнена');
+//        }
+//        if ($task->status == 3) {
+//            return back()->with('error', 'Задача уже завершина');
+//        }
+//    }
 }

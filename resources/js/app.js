@@ -1,47 +1,274 @@
 class Service {
     constructor() {
         this.token = this.getToken();
-        this.taskAccept = '/tasks/accept'
+        this.POST = 'POST';
+        this.GET = 'GET';
     }
 
-
-    acceptTask = (id) => {
-
-        // fetch('/tasks/accept', {
-        //     method: 'PUT',
-        //         headers: {
-        //             'X-CSRF-Token': this.token
-        //         },
-        // }).then((data) => data.json())
-        //     .then(data => console.log(data))
-
-        const body = {
-            id: id
+    getData = async (api, options) => {
+        const response = await fetch(api, options);
+        if (response.ok) {
+            return await response.json()
+        } else {
+            return this.createError(response)
         }
-        console.log(body)
+    }
+
+    createError = (response) => {
+        return {
+            status: 'error',
+            url: response.url,
+            error: {
+                ok: response.ok,
+                status: response.status,
+                statusText: response.statusText
+            }
+        }
+    }
+
+    createOptions = (method, body) => {
         const options = {
-            method: 'PUT',
+            method: method,
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                'content-type': 'application/json; charset=UTF-8',
                 'X-CSRF-Token': this.token
-            },
-            body:  JSON.stringify(body)
+            }
         }
-
-        const data = this.getData(this.taskAccept, options);
-    }
-
-
-    getData = async (api, data) => {
-        fetch(api, data)
-            .then((data) => data.json())
-            .then((body) => console.log(body))
+        if (body) options.body = JSON.stringify(body);
+        return options;
     }
 
     getToken() {
         return document.querySelector('[name="csrf-token"]').content
     }
+
+
 }
+
+class Render {
+    getListHtml = (getHtmlFn, arr) => {
+        let list = '';
+        arr.forEach((item) => {
+
+            list += getHtmlFn(item);
+        })
+
+        return list;
+    }
+
+    _render = ($parent, getHtmlMarkup, argument = false, array = false, where = 'beforeend') => {
+        let markupAsStr = '';
+        if (!$parent) {
+            return;
+        }
+        if (array) {
+            array.forEach((item) => {
+                markupAsStr = markupAsStr + getHtmlMarkup(item);
+            })
+        }
+        if (!array) {
+            markupAsStr = getHtmlMarkup(argument);
+        }
+        $parent.insertAdjacentHTML(where, markupAsStr);
+    }
+
+    clearParent = ($parent) => {
+        if (!$parent) {
+            return;
+        }
+        $parent.innerHTML = '';
+    }
+
+    delete = ($el) => {
+        if (!$el) {
+            return;
+        }
+        $el.remove()
+    }
+
+}
+
+class Spinner extends Render {
+    render = ($parent,) => {
+
+    }
+
+
+    mark = () => {
+        return (`
+
+        `)
+    }
+
+    delete = ($parent) => {
+        this.clearParent($parent);
+    }
+}
+
+class Body {
+    constructor() {
+        this.$body = document.querySelector('body');
+    }
+
+    scrollOff = () => {
+        this.$body.classList.add('scroll-off')
+    }
+
+    scrollOn = () => {
+        this.$body.classList.remove('scroll-off')
+    }
+}
+
+class Modal {
+    constructor(modalId) {
+        this.$modal = document.querySelector(modalId);
+        this.init();
+    }
+
+    init = () => {
+        if (!this.$modal) return;
+        this.$content = this.$modal.querySelector('#modalContent');
+        this.modalRender = new ModalRender(this.$content);
+        this.body = new Body();
+        this.listeners();
+    }
+
+    open = (getHtmlFn) => {
+        this.$modal.classList.add('forefront');
+        this.$modal.classList.add('open');
+        this.body.scrollOff();
+        this.modalRender.contentRender(getHtmlFn)
+    }
+
+
+    close = () => {
+        this.$modal.classList.remove('open');
+        setTimeout(() => {
+            this.$modal.classList.remove('forefront');
+            this.body.scrollOn();
+            this.modalRender.clearContent();
+        }, 200)
+    }
+
+    clickHandler = (e) => {
+        if (e.target.closest('[data-modal-close]')) {
+            this.close();
+        }
+    }
+    listeners = () => {
+        document.addEventListener('click', this.clickHandler);
+
+    }
+}
+
+class ModalRender extends Render {
+    constructor($content) {
+        super();
+        this.$content = $content;
+    }
+
+    contentRender = (getHtmlFn) => {
+        this._render(this.$content, getHtmlFn)
+    }
+
+    clearContent = () => {
+        this.clearParent(this.$content);
+    }
+}
+
+class Task {
+    constructor() {
+        this.init()
+    }
+
+    init = () => {
+        this.listeners();
+        this.response = null
+        this.taskRender = new TaskRender();
+        this.taskService = new TaskService();
+    }
+
+    // acceptTask = async ($btnAccept) => {
+    //     const $task = $btnAccept.closest('[data-task-id]');
+    //     const id =  $task.dataset.taskId;
+    //     const response = await service.acceptTask(id);
+    // }
+
+
+    showTaskInModal = async ($btn) => {
+        this.response = null
+        modal.open(this.taskRender.getTaskSkeletonHtml);
+        const taskId = $btn.dataset.showInfo;
+        this.response = await this.taskService.getTask(taskId);
+        this.responseHandler();
+    }
+
+    responseHandler = () => {
+        console.log(this.response);
+
+    };
+
+    clickHandler = (e) => {
+        // if(e.target.closest('[data-assept]')){
+        //     this.acceptTask(e.target.closest('[data-assept]'))
+        // }
+        if (e.target.closest('[data-show-info]')) {
+            this.showTaskInModal(e.target.closest('[data-show-info]'));
+        }
+
+    }
+    listeners = () => {
+        document.addEventListener('click', this.clickHandler);
+    }
+}
+
+class TaskService extends Service {
+
+    getTask = async (taskId) => {
+        const options = this.createOptions(this.POST);
+        return await this.getData(`/tasks/${taskId}`, options);
+    }
+
+    // acceptTask = (id) => {
+    //     const body = {
+    //         id: id
+    //     }
+
+    //
+    //     const data = this.getData(this.taskAccept, options);
+    // }
+
+}
+
+class TaskRender extends Render {
+    getTaskSkeletonHtml = () => {
+        return (`
+            <div class="task">
+                <h2 class="task__title shine">&nbsp;</h2>
+                <div class="task__content">
+                    <p class="task__description shine">
+
+                    </p>
+
+                    <div class="task-info">
+                        <ul class="task-info__list">
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="task__controls task__controls_empty shine"></div>
+            </div>
+        `)
+    }
+}
+
 
 class UserMenu {
     constructor(idUserBtn, idUserMenu) {
@@ -105,7 +332,7 @@ class Select {
 
     closeAll = () => {
         const $selectList = document.querySelectorAll('[data-select]');
-        $selectList.forEach( ($select) =>  this.close($select));
+        $selectList.forEach(($select) => this.close($select));
     }
 
 
@@ -141,7 +368,7 @@ class Select {
     }
 
     changeHandler = (e) => {
-        if(e.target.closest('[data-select]')){
+        if (e.target.closest('[data-select]')) {
             this.changeTitle(e.target)
         }
     }
@@ -152,33 +379,8 @@ class Select {
     }
 }
 
-class Task{
-    constructor() {
-        this.init()
-    }
 
-    init = () => {
-        this.listeners();
-    }
-
-    acceptTask = async ($btnAccept) => {
-        const $task = $btnAccept.closest('[data-task-id]');
-        const id =  $task.dataset.taskId;
-        const response = await service.acceptTask(id);
-    }
-
-    clickHandler = (e) => {
-        if(e.target.closest('[data-assept]')){
-            this.acceptTask(e.target.closest('[data-assept]'))
-        }
-    }
-    listeners = () => {
-        document.addEventListener('click', this.clickHandler);
-    }
-}
-
-
-const service = new Service();
+const modal = new Modal('#modal');
 const userMenu = new UserMenu('#userBtn', '#userMenu');
 const select = new Select();
 const task = new Task();

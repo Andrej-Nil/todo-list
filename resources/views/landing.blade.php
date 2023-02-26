@@ -1,13 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-{{--    <div class="top">--}}
-{{--        <h1 class="main-title">Задачи</h1>--}}
-{{--        <a href="{{route('tasks.create')}}" class="btn btn_blue">Создать задачу</a>--}}
-{{--    </div>--}}
 
-    <div class="content row-container">
-        test
+    <div class="content">
+        <div class="about block">
+            <div class="about__top">
+
+            </div>
+
+            <div class="about__bottom">
+                <a href="{{ route('login') }}" class="btn btn_green">Вход</a>
+                <a href="{{ route('register') }}" class="btn btn_blue">Регистрация</a>
+            </div>
+        </div>
+
+
     </div>
 
 @endsection
