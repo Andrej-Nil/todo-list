@@ -39,9 +39,9 @@ class Task extends Model
        return StatusHelper::getName($this->status);
     }
 
-    public function getOwnerNameAttribute(){
-        return $this->owner->name;
-    }
+//    public function getOwnerNameAttribute(){
+//        return $this->owner->name;
+//    }
 
 
 
