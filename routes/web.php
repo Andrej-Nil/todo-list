@@ -27,9 +27,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
 //    Route::post('/tasks/{task}', [TaskController::class, 'showInfo'] )->name('tasks.showInfo');
-    Route::post('/tasks/{task}', function ($task){
-        return new TaskResource(Task::findOrFail($task));
-    });
+//    Route::post('/tasks/{task}', function ($task){
+//        return new TaskResource(Task::findOrFail($task));
+//    });
+    Route::post('/tasks/{task}', [\App\Http\Controllers\Api\TaskController::class, 'show']);
 
 
     Route::put('/tasks/accept', [TaskController::class, 'accept'] )->name('tasks.accept');

@@ -14,11 +14,12 @@ class TaskResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = parent::toArray($request);
-        $data['owner_name'] = $this->owner->name;
+//        $data = parent::toArray($request);
+//        dd($data);
+//        $data['owner_name'] = $this->owner->name;
         return [
             'status'=>'success',
-            'task'=>$data
+//            $data
         ];
     }
 }

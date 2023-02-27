@@ -67,7 +67,6 @@ class TaskController extends Controller
         $task['owner_name'] = $owner_name;
         return [
             'status' => 'success',
-
         ];
     }
 
