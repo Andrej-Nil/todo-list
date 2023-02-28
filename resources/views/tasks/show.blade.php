@@ -45,11 +45,7 @@
                         <li class="task-info__item">
                             <span class="task-info__label">Исполнитель</span>
                             <span class="task-info__value">
-                                @forelse($task->users as $executor)
-                                    {{$executor->name}}
-                                @empty
-                                    Не назначин
-                                @endforelse
+                                {{$task->user ? $task->user->name : 'Не назначин'}}
                             </span>
                         </li>
                         <li class="task-info__item">

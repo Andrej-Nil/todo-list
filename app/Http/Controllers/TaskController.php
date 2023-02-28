@@ -26,10 +26,10 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
         $request['owner_id'] = Auth::user()->id;
-        $task = Task::create($request->all());
         if ($request->status) {
-            $task->users()->attach(Auth::user());
+            $request['executor_id'] = Auth::user()->id;
         }
+        $task = Task::create($request->all());
         return to_route('tasks.show', $task);
     }
 

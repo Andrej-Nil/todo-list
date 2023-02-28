@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->integer('status')->default(0);
             $table->integer('owner_id');
+            $table->integer('executor_id')->nullable();
             $table->boolean('is_publish')->default(false);
             $table->boolean('is_important')->default(false);
             $table->boolean('is_urgent')->default(false);

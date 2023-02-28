@@ -13,11 +13,14 @@ class Task extends Model
     use HasFactory,
         SoftDeletes;
 
+    protected $dates = ['date_of_delivery'];
+
     protected $fillable = [
         'title',
         'description',
         'status',
         'owner_id',
+        'executor_id',
         'is_publish',
         'is_important',
         'is_urgent',
@@ -25,9 +28,9 @@ class Task extends Model
         'date_of_delivery',
     ];
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class, 'executor_id');
     }
 
     public function owner()
@@ -37,6 +40,22 @@ class Task extends Model
 
     public function getStatusLabelAttribute(){
        return StatusHelper::getName($this->status);
+    }
+
+    public function getCreatedDateAttribute() {
+        $date = $this->created_at;
+        if($date){
+            return $date->format('d-m-Y');
+        }
+        return 'Не указано';
+    }
+
+    public function getDeliveryDateAttribute() {
+        $date = $this->date_of_delivery;
+        if($date){
+            return $date->format('d-m-Y');
+        }
+        return 'Не указано';
     }
 
 //    public function getOwnerNameAttribute(){
@@ -58,9 +77,7 @@ class Task extends Model
         $complete = $request['complete'];
 
         if ($area == 'work') {
-            $query->whereHas('users', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            });
+            $query->where('executor_id', $userId);
         } elseif ($area == 'create') {
             $query->where('owner_id', $userId);
         } else {

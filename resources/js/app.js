@@ -49,7 +49,6 @@ class Render {
     getListHtml = (getHtmlFn, arr) => {
         let list = '';
         arr.forEach((item) => {
-
             list += getHtmlFn(item);
         })
 
@@ -119,16 +118,30 @@ class Body {
     }
 }
 
-class Modal {
+class ModalRender extends Render {
+    constructor($content) {
+        super();
+        this.$content = document.querySelector('#modalContent');
+    }
+
+    contentRender = (getHtmlFn, data = false) => {
+        this._render(this.$content, getHtmlFn, data)
+    }
+
+    clearContent = () => {
+        this.clearParent(this.$content);
+    }
+}
+
+class Modal extends ModalRender {
     constructor(modalId) {
+        super();
         this.$modal = document.querySelector(modalId);
         this.init();
     }
 
     init = () => {
         if (!this.$modal) return;
-        this.$content = this.$modal.querySelector('#modalContent');
-        this.modalRender = new ModalRender(this.$content);
         this.body = new Body();
         this.listeners();
     }
@@ -137,16 +150,15 @@ class Modal {
         this.$modal.classList.add('forefront');
         this.$modal.classList.add('open');
         this.body.scrollOff();
-        this.modalRender.contentRender(getHtmlFn)
+        this.contentRender(getHtmlFn);
     }
-
 
     close = () => {
         this.$modal.classList.remove('open');
         setTimeout(() => {
             this.$modal.classList.remove('forefront');
             this.body.scrollOn();
-            this.modalRender.clearContent();
+            this.clearContent();
         }, 200)
     }
 
@@ -161,19 +173,138 @@ class Modal {
     }
 }
 
-class ModalRender extends Render {
-    constructor($content) {
-        super();
-        this.$content = $content;
+class TaskService extends Service {
+
+    getTask = async (taskId) => {
+        const options = this.createOptions(this.POST);
+        return await this.getData(`/tasks/${taskId}`, options);
     }
 
-    contentRender = (getHtmlFn) => {
-        this._render(this.$content, getHtmlFn)
+    // acceptTask = (id) => {
+    //     const body = {
+    //         id: id
+    //     }
+
+    //
+    //     const data = this.getData(this.taskAccept, options);
+    // }
+
+}
+
+class TaskRender extends Render {
+
+
+
+    getTaskHtml = (task) => {
+        const { id, title, desc, status, displayBtn, info } = task;
+        const btn = displayBtn ? this.getBtnHtml(status) : '';
+        const infoItems = this.getListHtml(this.getInfoItemHtml, info)
+        return `
+            <div data-task-id="${id}" class="task">
+                <h2 class="task__title">${title}</h2>
+                <div class="task__content">
+
+                    <p class="task__description">${desc}</p>
+
+                    <div class="task-info">
+                        <ul class="task-info__list">
+                            ${infoItems}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="task__controls">
+
+                    ${btn}
+                </div>
+            </div>
+         `
+
     }
 
-    clearContent = () => {
-        this.clearParent(this.$content);
+    getTaskSkeletonHtml = () => {
+        return `
+            <div class="task">
+                <h2 class="task__title shine">&nbsp;</h2>
+                <div class="task__content">
+                    <p class="task__description shine">
+
+                    </p>
+
+                    <div class="task-info">
+                        <ul class="task-info__list">
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                            <li class="task-info__item shine">&nbsp;</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="task__controls task__controls_empty shine"></div>
+            </div>
+        `
     }
+
+
+    getInfoItemHtml = (item) => {
+
+        const {label, value, url} = item
+
+        return `
+            <li class="task-info__item">
+               <span class="task-info__label">${label}</span>
+                ${this.getInfoValueHtml(value, url)}
+            </li>
+        `
+    }
+
+    getInfoValueHtml = (value, url) => {
+        if(url) {
+            return `<a href="${url}" class="task-info__value link">${value}</a>`
+        }
+
+        return `<span class="task-info__value">${value}</span>`
+    }
+
+
+    getBtnHtml = (status) => {
+
+
+        if(status === 0){
+           return '<button data-assept class="btn btn_blue btn_small">Приянть задачу</button>';
+        }
+
+        if(status === 1){
+            return `
+                <button data-pause class="btn btn_yellow btn_small">Приостановить</button>
+                <button data-complite class="btn btn_green btn_small">Выполнено</button>
+            `;
+        }
+
+        if(status === 2){
+            return `
+                 <button data-pause class="btn btn_yellow btn_small">Продолжить</button>
+                 <button data-complite class="btn btn_green btn_small">Выполнено</button>
+            `;
+        }
+
+        return '';
+    //     {{$task->status}}
+    // @if($task->status == 0)
+    //
+    // @elseif($task->status == 1)
+    // <button data-pause class="btn btn_yellow btn_small">Приостановить</button>
+    //     <button data-complite class="btn btn_green btn_small">Выполнено</button>
+    // @elseif($task->status == 2)
+    // <button data-pause class="btn btn_yellow btn_small">Продолжить</button>
+    //     <button data-complite class="btn btn_green btn_small">Выполнено</button>
+    // @endif
+    }
+
 }
 
 class Task {
@@ -203,8 +334,19 @@ class Task {
         this.responseHandler();
     }
 
+    renderTask = () => {
+        modal.clearContent();
+        modal.contentRender(this.taskRender.getTaskHtml, this.response.data)
+    }
+
     responseHandler = () => {
-        console.log(this.response);
+        if (this.response.status === 'success') {
+            this.renderTask()
+
+        }
+        if (this.response.status === 'error') {
+            console.log(this.response)
+        }
 
     };
 
@@ -222,52 +364,7 @@ class Task {
     }
 }
 
-class TaskService extends Service {
 
-    getTask = async (taskId) => {
-        const options = this.createOptions(this.POST);
-        return await this.getData(`/tasks/${taskId}`, options);
-    }
-
-    // acceptTask = (id) => {
-    //     const body = {
-    //         id: id
-    //     }
-
-    //
-    //     const data = this.getData(this.taskAccept, options);
-    // }
-
-}
-
-class TaskRender extends Render {
-    getTaskSkeletonHtml = () => {
-        return (`
-            <div class="task">
-                <h2 class="task__title shine">&nbsp;</h2>
-                <div class="task__content">
-                    <p class="task__description shine">
-
-                    </p>
-
-                    <div class="task-info">
-                        <ul class="task-info__list">
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="task__controls task__controls_empty shine"></div>
-            </div>
-        `)
-    }
-}
 
 
 class UserMenu {

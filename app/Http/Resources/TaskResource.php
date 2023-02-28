@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class TaskResource extends JsonResource
 {
@@ -14,18 +15,6 @@ class TaskResource extends JsonResource
      */
     public function toArray($request)
     {
-//        $data = parent::toArray($request);
-//        dd($data);
-//        $data['owner_name'] = $this->owner->name;
-        $dateOfDelivery = $this->date_of_delivery;
-        $createdAt = $this->created_at;
-        if($dateOfDelivery !== null){
-            $dateOfDelivery = $dateOfDelivery->format('d-m-Y');
-        }
-        if($createdAt !== null){
-            $createdAt = $createdAt->format('d-m-Y');
-        }
-
         return [
             'status'=>'success',
             'data' =>[
@@ -33,18 +22,17 @@ class TaskResource extends JsonResource
                 'title'=>$this->title,
                 'desc'=>$this->description,
                 'status'=>$this->status,
+                'displayBtn'=>($this->executor_id === null || ($this->executor_id ? $this->executor_id === Auth::user()->id : false )),
                 'info'=>[
-                    ['label'=>'Статус', 'value'=>$this->status_label],
-                    ['label'=>'Исполнитель', 'value'=>$this->users[0]->name, 'url'=>"http://todo-list.local.ru/users/".$this->users[0]->id],
-                    ['label'=>'Срочное', 'value'=>$this->is_urgent ? 'Да' : 'Нет'],
-                    ['label'=>'Важное', 'value'=>$this->is_important ? 'Да' : 'Нет'],
-                    ['label'=>'Срок исполнения', 'value'=>$dateOfDelivery ? $dateOfDelivery : 'Не указано'],
-                    ['label'=>'Заказчик', 'value'=>$this->owner->name], 'url'=>"http://todo-list.local.ru/users/".$this->owner->id,
-                    ['label'=>'Доспуп', 'value'=>$this->is_publish ? 'Приватная' : 'Публичная'],
-                    ['label'=>'Дата создания', 'value'=>$createdAt ? $createdAt : 'Не указано'],
-
+                    ['label'=>'Статус', 'url'=>null, 'value'=>$this->status_label ],
+                    ['label'=>'Исполнитель', 'url'=>$this->user ? route('users.show', $this->user) : null, 'value'=>$this->user->name ?? 'Не назначин'],
+                    ['label'=>'Срочное', 'url'=>null, 'value'=>$this->is_urgent ? 'Да' : 'Нет'],
+                    ['label'=>'Важное', 'url'=>null, 'value'=>$this->is_important ? 'Да' : 'Нет'],
+                    ['label'=>'Срок исполнения', 'url'=>null, 'value'=>$this->delivery_date],
+                    ['label'=>'Заказчик', 'url'=>route('users.show', $this->owner), 'value'=>$this->owner->name, ],
+                    ['label'=>'Доспуп', 'url'=>null, 'value'=>$this->is_publish ? 'Приватная' : 'Публичная'],
+                    ['label'=>'Дата создания', 'url'=>null, 'value'=>$this->created_date],
                 ]
-//
             ]
         ];
     }
