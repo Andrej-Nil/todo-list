@@ -37,12 +37,6 @@
                             </span>
                         </li>
                         <li class="task-info__item">
-                            <span class="task-info__label">Доступ</span>
-                            <span class="task-info__value">
-                                {{$task->is_publish ? 'Публичная' : 'Приватная'}}
-                            </span>
-                        </li>
-                        <li class="task-info__item">
                             <span class="task-info__label">Исполнитель</span>
                             <span class="task-info__value">
                                 {{$task->user ? $task->user->name : 'Не назначин'}}
@@ -60,18 +54,31 @@
                                  {{$task->is_important ? 'Да' : 'Нет'}}
                             </span>
                         </li>
+
                         <li class="task-info__item">
                             <span class="task-info__label">Срок иполнения</span>
-                            <span class="task-info__value">{{$task->date_of_delivery}}</span>
+                            <span class="task-info__value">{{$task->delivery_date}}</span>
                         </li>
+
                         <li class="task-info__item">
                             <span class="task-info__label">Заказчик</span>
                             <a href="{{route('users.show', $task->owner->id)}}"
                                class="task-info__value link">{{$task->owner->name}}</a>
                         </li>
+
+                        <li class="task-info__item">
+                            <span class="task-info__label">Доступ</span>
+                            <span class="task-info__value">
+                                {{$task->is_publish ? 'Публичная' : 'Приватная'}}
+                            </span>
+                        </li>
+
+
+
+
                         <li class="task-info__item">
                             <span class="task-info__label">Дата создания</span>
-                            <span class="task-info__value">{{$task->created_at->format('d-m-Y')}}</span>
+                            <span class="task-info__value">{{$task->created_date}}</span>
                         </li>
                     </ul>
 

@@ -19,8 +19,8 @@ class UserController extends Controller
     {
         $userId = $user->id;
         $tasksQuery = Task::where('owner_id', $userId)
-            ->orWhereHas('users', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
+            ->orWhereHas('user', function ($query) use ($userId) {
+                $query->where('executor_id', $userId);
             });
         if (Auth::user()->id !== $userId) {
             $tasksQuery->where('is_publish', 1);

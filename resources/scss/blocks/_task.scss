@@ -38,6 +38,10 @@
     font-size: 14px;
     padding: 5px 10px;
     background: #f0f0f0;
+    transition: background 0.2s linear;
+    &:hover{
+        background: #ddd;
+    }
 }
 
 .task__controls{
