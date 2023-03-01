@@ -174,27 +174,24 @@ class Modal extends ModalRender {
 }
 
 class TaskService extends Service {
-
-    getTask = async (taskId) => {
+constructor() {
+    super();
+    this.baseUrl = 'tasks'
+}
+    get = async (taskId) => {
         const options = this.createOptions(this.POST);
-        return await this.getData(`/tasks/${taskId}`, options);
+        return await this.getData(`${this.baseUrl}/${taskId}`, options);
     }
 
-    // acceptTask = (id) => {
-    //     const body = {
-    //         id: id
-    //     }
-
-    //
-    //     const data = this.getData(this.taskAccept, options);
-    // }
+    accept = async (taskId) => {
+        const options = this.createOptions(this.POST);
+        const url = `/${this.baseUrl}/${taskId}/accept`;
+        return await this.getData(url, options);
+    }
 
 }
 
 class TaskRender extends Render {
-
-
-
     getTaskHtml = (task) => {
         const { id, title, desc, status, displayBtn, info } = task;
         const btn = displayBtn ? this.getBtnHtml(status) : '';
@@ -214,7 +211,6 @@ class TaskRender extends Render {
                 </div>
 
                 <div class="task__controls">
-
                     ${btn}
                 </div>
             </div>
@@ -227,12 +223,10 @@ class TaskRender extends Render {
             <div class="task">
                 <h2 class="task__title shine">&nbsp;</h2>
                 <div class="task__content">
-                    <p class="task__description shine">
-
-                    </p>
+                    <p class="task__description shine">&nbsp;</p>
 
                     <div class="task-info">
-                        <ul class="task-info__list">
+                        <ul data-info-list class="task-info__list">
                             <li class="task-info__item shine">&nbsp;</li>
                             <li class="task-info__item shine">&nbsp;</li>
                             <li class="task-info__item shine">&nbsp;</li>
@@ -248,16 +242,13 @@ class TaskRender extends Render {
             </div>
         `
     }
-
-
     getInfoItemHtml = (item) => {
-
-        const {label, value, url} = item
-
+        const {label, value, url} = item;
+        const infoValue = this.getInfoValueHtml(value, url);
         return `
             <li class="task-info__item">
                <span class="task-info__label">${label}</span>
-                ${this.getInfoValueHtml(value, url)}
+                ${infoValue}
             </li>
         `
     }
@@ -266,18 +257,12 @@ class TaskRender extends Render {
         if(url) {
             return `<a href="${url}" class="task-info__value link">${value}</a>`
         }
-
         return `<span class="task-info__value">${value}</span>`
     }
-
-
     getBtnHtml = (status) => {
-
-
         if(status === 0){
-           return '<button data-assept class="btn btn_blue btn_small">Приянть задачу</button>';
+           return '<button data-accept class="btn btn_blue btn_small">Приянть задачу</button>';
         }
-
         if(status === 1){
             return `
                 <button data-pause class="btn btn_yellow btn_small">Приостановить</button>
@@ -291,10 +276,13 @@ class TaskRender extends Render {
                  <button data-complite class="btn btn_green btn_small">Выполнено</button>
             `;
         }
-
         return '';
     }
 
+    inModal = (task) => {
+        modal.clearContent();
+        modal.contentRender(this.getTaskHtml, task)
+    }
 }
 
 class Task {
@@ -309,30 +297,29 @@ class Task {
         this.taskService = new TaskService();
     }
 
-    // acceptTask = async ($btnAccept) => {
-    //     const $task = $btnAccept.closest('[data-task-id]');
-    //     const id =  $task.dataset.taskId;
-    //     const response = await service.acceptTask(id);
-    // }
-
 
     showTaskInModal = async ($btn) => {
         this.response = null
         modal.open(this.taskRender.getTaskSkeletonHtml);
         const taskId = $btn.dataset.showInfo;
-        this.response = await this.taskService.getTask(taskId);
-        this.responseHandler();
+        this.response = await this.taskService.get(taskId);
+        this.responseHandler(this.taskRender.inModal)();
     }
 
-    renderTask = () => {
-        modal.clearContent();
-        modal.contentRender(this.taskRender.getTaskHtml, this.response.data)
+    acceptTask = async ($btnAccept) => {
+        const $task = $btnAccept.closest('[data-task-id]');
+        const taskId =  $task.dataset.taskId;
+        const response = await this.taskService.accept(taskId);
+        console.log(response);
     }
 
-    responseHandler = () => {
+
+
+
+
+    responseHandler = (successFn, errorFn) => () => {
         if (this.response.status === 'success') {
-            this.renderTask()
-
+            successFn(this.response.data);
         }
         if (this.response.status === 'error') {
             console.log(this.response)
@@ -341,9 +328,9 @@ class Task {
     };
 
     clickHandler = (e) => {
-        // if(e.target.closest('[data-assept]')){
-        //     this.acceptTask(e.target.closest('[data-assept]'))
-        // }
+        if(e.target.closest('[data-accept]')){
+            this.acceptTask(e.target.closest('[data-accept]'))
+        }
         if (e.target.closest('[data-show-info]')) {
             this.showTaskInModal(e.target.closest('[data-show-info]'));
         }

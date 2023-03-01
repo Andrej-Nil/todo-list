@@ -61,50 +61,6 @@ class TaskController extends Controller
 //
     }
 
-    public function showInfo(Task $task)
-    {
-        $owner_name = $task->owner()->name;
-        $task['owner_name'] = $owner_name;
-        return [
-            'status' => 'success',
-        ];
-    }
-
-
-//    public function accept(Request $request)
-//    {
-//        $userId = Auth::user()->id;
-//        $taskId = $request->id;
-//        $task = Task::find($taskId);
-//        if (!$task) {
-//            return [
-//                'нет такой задачи'
-//            ];
-//        }
-//        if ($task->is_publish) {
-//            $users = $task->users;
-//            if (count($users)) {
-//                return [
-//                    'publish'
-//                ];
-////                return back()->with('error', 'ошибка исользования');
-//            }
-//        } else {
-//            if ($task->owner_id !== $userId) {
-//                return [
-//                    'owner'
-//                ];
-////                return back()->with('error', 'ошибка публичность');
-//            }
-//        }
-//        $task->update(['status' => 1]);
-//        $task->users()->attach(Auth::user());
-//        return [
-//            'data' => ['type' => 'success']
-//        ];
-////        return back()->with('success', 'Принята');
-//    }
-//
 //    public function pause(Task $task)
 //    {
 //

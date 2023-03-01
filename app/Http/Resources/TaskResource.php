@@ -31,7 +31,7 @@ class TaskResource extends JsonResource
                     ['label'=>'Важное', 'url'=>null, 'value'=>$this->is_important ? 'Да' : 'Нет'],
                     ['label'=>'Срок исполнения', 'url'=>null, 'value'=>$this->delivery_date],
                     ['label'=>'Заказчик', 'url'=>route('users.show', $this->owner), 'value'=>$this->owner->name, ],
-                    ['label'=>'Доспуп', 'url'=>null, 'value'=>$this->is_publish ? 'Приватная' : 'Публичная'],
+                    ['label'=>'Доспуп', 'url'=>null, 'value'=>$this->is_publish ? 'Публичная' : 'Приватная'],
                     ['label'=>'Дата создания', 'url'=>null, 'value'=>$this->created_date],
                 ]
             ]
