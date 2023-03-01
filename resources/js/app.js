@@ -293,16 +293,6 @@ class TaskRender extends Render {
         }
 
         return '';
-    //     {{$task->status}}
-    // @if($task->status == 0)
-    //
-    // @elseif($task->status == 1)
-    // <button data-pause class="btn btn_yellow btn_small">Приостановить</button>
-    //     <button data-complite class="btn btn_green btn_small">Выполнено</button>
-    // @elseif($task->status == 2)
-    // <button data-pause class="btn btn_yellow btn_small">Продолжить</button>
-    //     <button data-complite class="btn btn_green btn_small">Выполнено</button>
-    // @endif
     }
 
 }
