@@ -46,6 +46,12 @@ class Service {
 }
 
 class Render {
+
+    createMark = (DOMEl, classArr, value) => {
+        return `
+            <${DOMEl} class="${classArr.join(' ')}">${value}</${DOMEl}>
+        `;
+    }
     getListHtml = (getHtmlFn, arr) => {
         let list = '';
         arr.forEach((item) => {
@@ -119,7 +125,7 @@ class Body {
 }
 
 class ModalRender extends Render {
-    constructor($content) {
+    constructor() {
         super();
         this.$content = document.querySelector('#modalContent');
     }
@@ -174,10 +180,11 @@ class Modal extends ModalRender {
 }
 
 class TaskService extends Service {
-constructor() {
-    super();
-    this.baseUrl = 'tasks'
-}
+    constructor() {
+        super();
+        this.baseUrl = 'tasks'
+    }
+
     get = async (taskId) => {
         const options = this.createOptions(this.POST);
         return await this.getData(`${this.baseUrl}/${taskId}`, options);
@@ -192,8 +199,9 @@ constructor() {
 }
 
 class TaskRender extends Render {
+
     getTaskHtml = (task) => {
-        const { id, title, desc, status, displayBtn, info } = task;
+        const {id, title, desc, status, displayBtn, info} = task;
         const btn = displayBtn ? this.getBtnHtml(status) : '';
         const infoItems = this.getListHtml(this.getInfoItemHtml, info)
         return `
@@ -218,7 +226,10 @@ class TaskRender extends Render {
 
     }
 
+
     getTaskSkeletonHtml = () => {
+        const listArr = Array(8).fill({optionalCls: 'shine', value: '&nbsp;'})
+        const taskInfoList = this.getListHtml(this.getInfoEmptyItemHtml, listArr);
         return `
             <div class="task">
                 <h2 class="task__title shine">&nbsp;</h2>
@@ -226,15 +237,8 @@ class TaskRender extends Render {
                     <p class="task__description shine">&nbsp;</p>
 
                     <div class="task-info">
-                        <ul data-info-list class="task-info__list">
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
-                            <li class="task-info__item shine">&nbsp;</li>
+                        <ul class="task-info__list">
+                            ${taskInfoList}
                         </ul>
                     </div>
                 </div>
@@ -250,27 +254,35 @@ class TaskRender extends Render {
                <span class="task-info__label">${label}</span>
                 ${infoValue}
             </li>
-        `
+        `;
     }
 
+    getInfoEmptyItemHtml = (item) => {
+        const {optionalCls, value} = item;
+        const classes = ['task-info__item'];
+        if (optionalCls) classes.push(optionalCls);
+        return `<li class="${classes.join(' ')}">${value}</li>`
+    }
+
+
     getInfoValueHtml = (value, url) => {
-        if(url) {
+        if (url) {
             return `<a href="${url}" class="task-info__value link">${value}</a>`
         }
         return `<span class="task-info__value">${value}</span>`
     }
     getBtnHtml = (status) => {
-        if(status === 0){
-           return '<button data-accept class="btn btn_blue btn_small">Приянть задачу</button>';
+        if (status === 0) {
+            return '<button data-accept class="btn btn_blue btn_small">Приянть задачу</button>';
         }
-        if(status === 1){
+        if (status === 1) {
             return `
                 <button data-pause class="btn btn_yellow btn_small">Приостановить</button>
                 <button data-complite class="btn btn_green btn_small">Выполнено</button>
             `;
         }
 
-        if(status === 2){
+        if (status === 2) {
             return `
                  <button data-pause class="btn btn_yellow btn_small">Продолжить</button>
                  <button data-complite class="btn btn_green btn_small">Выполнено</button>
@@ -279,9 +291,34 @@ class TaskRender extends Render {
         return '';
     }
 
+    getErrorHtml = (errorData) => {
+        const listArr = Array(8).fill({optionalCls: null, value: '&nbsp;'})
+        const taskInfoList = this.getListHtml(this.getInfoEmptyItemHtml, listArr);
+
+        return `
+            <div class="task">
+
+               <h2 class="task__title">Ошибка</h2>
+               <div class="task__content">
+                  <p class="task__description">${errorData.message}</p>
+                    <div class="task-info">
+                        <ul class="task-info__list">
+                            ${taskInfoList}
+                        </ul>
+                    </div>
+                 </div>
+                 <div class="task__controls task__controls_empty"></div>
+            </div>
+        `;
+    }
+
     inModal = (task) => {
         modal.clearContent();
         modal.contentRender(this.getTaskHtml, task)
+    }
+    errorInModal = (errorData) => {
+        modal.clearContent();
+        modal.contentRender(this.getErrorHtml, errorData)
     }
 }
 
@@ -303,32 +340,32 @@ class Task {
         modal.open(this.taskRender.getTaskSkeletonHtml);
         const taskId = $btn.dataset.showInfo;
         this.response = await this.taskService.get(taskId);
-        this.responseHandler(this.taskRender.inModal)();
+        this.responseHandler(this.taskRender.inModal, this.taskRender.errorInModal)();
     }
 
     acceptTask = async ($btnAccept) => {
+        this.response = null;
         const $task = $btnAccept.closest('[data-task-id]');
-        const taskId =  $task.dataset.taskId;
-        const response = await this.taskService.accept(taskId);
-        console.log(response);
+        const taskId = $task.dataset.taskId;
+        this.response = await this.taskService.accept(taskId);
+        this.responseHandler(this.taskRender.errorInModal, this.taskRender.errorInModal)();
     }
-
-
-
 
 
     responseHandler = (successFn, errorFn) => () => {
         if (this.response.status === 'success') {
+            console.log(this.response)
             successFn(this.response.data);
+
         }
         if (this.response.status === 'error') {
-            console.log(this.response)
+            errorFn(this.response.data);
         }
 
     };
 
     clickHandler = (e) => {
-        if(e.target.closest('[data-accept]')){
+        if (e.target.closest('[data-accept]')) {
             this.acceptTask(e.target.closest('[data-accept]'))
         }
         if (e.target.closest('[data-show-info]')) {
@@ -340,8 +377,6 @@ class Task {
         document.addEventListener('click', this.clickHandler);
     }
 }
-
-
 
 
 class UserMenu {

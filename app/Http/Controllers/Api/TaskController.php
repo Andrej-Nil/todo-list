@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
     public function show(Task $task)
     {
+        fghfg
         return new TaskResource($task);
     }
 
     public function accept(Task $task)
     {
-//        $userId = Auth::user()->id;
+        $userId = Auth::user()->id;
         if($task->executor_id){
-            return [
-                'status'=>'error',
-                'data'=>[
-                    'message'=>'Исполнитель назначен'
-                ]
-            ];
+            return ResponseHelper::getError('Исполнитель назначен', );
         }
-
+        $task->update([
+            'executor_id'=>$userId,
+            'status'=>1
+        ]);
         return new TaskResource($task);
 //        if ($task->is_publish) {
 //            $users = $task->users;
