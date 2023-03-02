@@ -13,7 +13,7 @@ class TaskController extends Controller
 {
     public function show(Task $task)
     {
-        fghfg
+
         return new TaskResource($task);
     }
 
