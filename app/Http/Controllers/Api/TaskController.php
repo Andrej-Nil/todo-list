@@ -13,7 +13,6 @@ class TaskController extends Controller
 {
     public function show(Task $task)
     {
-
         return new TaskResource($task);
     }
 
@@ -21,13 +20,14 @@ class TaskController extends Controller
     {
         $userId = Auth::user()->id;
         if($task->executor_id){
-            return ResponseHelper::getError('Исполнитель назначен', );
+            return ResponseHelper::getError('Исполнитель назначен', 409);
         }
-        $task->update([
-            'executor_id'=>$userId,
-            'status'=>1
-        ]);
-        return new TaskResource($task);
+//        $task->update([
+//            'executor_id'=>$userId,
+//            'status'=>1
+//        ]);
+        return ResponseHelper::getError('Исполнитель назначен', 409);
+//        return new TaskResource($task);
 //        if ($task->is_publish) {
 //            $users = $task->users;
 //            if (count($users)) {

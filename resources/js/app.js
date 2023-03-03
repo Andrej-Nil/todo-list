@@ -148,6 +148,8 @@ class Modal extends ModalRender {
 
     init = () => {
         if (!this.$modal) return;
+        this.$modalMessage = this.$modal.querySelector('#modalMessage');
+        this.$spinner = this.$modal.querySelector('[data-spinner]');
         this.body = new Body();
         this.listeners();
     }
@@ -165,6 +167,34 @@ class Modal extends ModalRender {
             this.$modal.classList.remove('forefront');
             this.body.scrollOn();
             this.clearContent();
+            this.hideSpinner();
+        }, 200)
+    }
+
+    showMessage = () => {
+        this.$modalMessage.classList.add('open');
+        this.$modalMessage.classList.add('appearance');
+
+    }
+
+    hideMessage = () => {
+        this.$modalMessage.classList.add('open');
+        setTimeout(() => {
+            this.$modalMessage.classList.add('appearance');
+        }, 200);
+    }
+
+
+
+    showSpinner = () => {
+        this.$spinner.classList.add('show');
+        this.$spinner.classList.add('appearance');
+    }
+
+    hideSpinner = () => {
+        this.$spinner.classList.remove('appearance');
+        setTimeout(() => {
+            this.$spinner.classList.remove('show');
         }, 200)
     }
 
@@ -345,23 +375,30 @@ class Task {
 
     acceptTask = async ($btnAccept) => {
         this.response = null;
+        modal.showSpinner();
         const $task = $btnAccept.closest('[data-task-id]');
         const taskId = $task.dataset.taskId;
         this.response = await this.taskService.accept(taskId);
-        this.responseHandler(this.taskRender.errorInModal, this.taskRender.errorInModal)();
+        this.responseHandler(this.taskRender.inModal, this.actionErrorHandler)(taskId);
     }
 
+    actionErrorHandler = (taskId) => {
+        if (this.response.data.status === 404) {
+
+
+        } else {
+            console.log('sdkjhvdsfghc')
+            modal.showMessage();
+        }
+    }
 
     responseHandler = (successFn, errorFn) => () => {
         if (this.response.status === 'success') {
-            console.log(this.response)
             successFn(this.response.data);
-
         }
         if (this.response.status === 'error') {
             errorFn(this.response.data);
         }
-
     };
 
     clickHandler = (e) => {
