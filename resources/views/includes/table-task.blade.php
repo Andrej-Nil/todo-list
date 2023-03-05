@@ -1,4 +1,4 @@
-<div class="{{$task->is_important ? 'table-task table__row table__row_important' : 'table-task table__row'}}">
+<div data-task-id="{{$task->id}}" class="{{$task->is_important ? 'table-task table__row table__row_important' : 'table-task table__row'}}">
     <div class="table__coll table__coll_name">
         <a href="{{route('tasks.show', $task->id)}}"
            class="table__link">
@@ -12,7 +12,7 @@
         </span>
         </div>
     @endif
-    <div class="table__coll">
+    <div data-status class="table__coll">
         @if($task->status == 1)
             <div class="table__btn btn btn_blue" title="{{$task->status_label}}">
                 <i class="table__btn-icon table__btn-icon_clock"></i>
@@ -50,7 +50,7 @@
     @endif
 
     <div class="table__coll">
-        <div data-show-info="{{$task->id}}" class="table__btn btn btn_white">
+        <div data-show-info class="table__btn btn btn_white">
             <i class="table__btn-icon table__btn-icon_description" title="Описание"></i>
         </div>
     </div>

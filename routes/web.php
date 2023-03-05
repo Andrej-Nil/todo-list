@@ -28,10 +28,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function(){
     Route::post('/tasks/{task}', [\App\Http\Controllers\Api\TaskController::class, 'show']);
     Route::post('/tasks/{task}/accept', [\App\Http\Controllers\Api\TaskController::class, 'accept']);
-
+    Route::post('/tasks/{task}/pause', [\App\Http\Controllers\Api\TaskController::class, 'pause'] );
 
 //    Route::put('/tasks/accept', [TaskController::class, 'accept'] )->name('tasks.accept');
-    Route::put('/tasks/{task}/pause', [TaskController::class, 'pause'] )->name('tasks.pause');
+//    ->name('tasks.pause');
     Route::put('/tasks/{task}/completed', [TaskController::class, 'completed'] )->name('tasks.completed');
 
     Route::resource('/tasks', TaskController::class);

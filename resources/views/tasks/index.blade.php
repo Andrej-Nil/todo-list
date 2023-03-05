@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="top">
-        <h1 class="main-title">Список задачь</h1>
+        <h1 class="main-title">Список задач</h1>
         <a href="{{route('tasks.create')}}" class="btn btn_blue">Создать задачу</a>
     </div>
 

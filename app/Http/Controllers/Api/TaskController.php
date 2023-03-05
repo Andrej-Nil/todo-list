@@ -20,14 +20,14 @@ class TaskController extends Controller
     {
         $userId = Auth::user()->id;
         if($task->executor_id){
-            return ResponseHelper::getError('Исполнитель назначен', 409);
+            return ResponseHelper::getError('У этой задачи уже назначин исполнитель', 409);
         }
-//        $task->update([
-//            'executor_id'=>$userId,
-//            'status'=>1
-//        ]);
-        return ResponseHelper::getError('Исполнитель назначен', 409);
-//        return new TaskResource($task);
+
+        $task->update([
+            'executor_id'=>$userId,
+            'status'=>1
+        ]);
+        return new TaskResource($task);
 //        if ($task->is_publish) {
 //            $users = $task->users;
 //            if (count($users)) {
@@ -50,6 +50,10 @@ class TaskController extends Controller
 //            'data' => ['type' => 'success']
 //        ];
 //        return back()->with('success', 'Принята');
+    }
+
+    public function pause(Task $task){
+
     }
 
 }

@@ -69,15 +69,15 @@
     width: 100%;
     top: 100%;
     right: 50%;
-    transform: translate(50%, 0);
+    transform: translate(50%, 50%);
     transition: 0.2s ease-in-out;
     &.show{
         display: block;
     }
-
     &.appearance{
-        transform: translate(50%, 100%);
+        transform: translate(50%, -50%);
         opacity: 1;
+        top: 50%;
     }
 }
 
