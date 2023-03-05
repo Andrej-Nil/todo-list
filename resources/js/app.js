@@ -239,9 +239,9 @@ class TaskService extends Service {
         return await this.getData(`${this.baseUrl}/${taskId}`, options);
     }
 
-    accept = async (taskId) => {
+    action = async (taskId, type) => {
         const options = this.createOptions(this.POST);
-        const url = `/${this.baseUrl}/${taskId}/accept`;
+        const url = `/${this.baseUrl}/${taskId}/${type}`;
         return await this.getData(url, options);
     }
 
@@ -271,10 +271,12 @@ class TaskRender extends Render {
     getTaskHtml = (task) => {
         const {id, title, desc, status, displayBtn, info} = task;
         const btn = displayBtn ? this.getBtnHtml(status) : '';
-        const infoItems = this.getListHtml(this.getInfoItemHtml, info)
+        const infoItems = this.getListHtml(this.getInfoItemHtml, info);
+        const completed = status == 3 ? '(Завершена)' : '';
+
         return `
             <div data-task-id="${id}" class="task">
-                <h2 class="task__title">${title}</h2>
+                <h2 class="task__title">${title}${completed}</h2>
                 <div class="task__content">
 
                     <p class="task__description">${desc}</p>
@@ -336,22 +338,22 @@ class TaskRender extends Render {
     }
     getBtnHtml = (status) => {
         if (status === 0) {
-            return '<button data-accept class="btn btn_blue btn_small">Приянть задачу</button>';
+            return '<button data-task-action="accept" class="btn btn_blue btn_small">Приянть задачу</button>';
         }
         if (status === 1) {
             return `
-                <button data-pause class="btn btn_yellow btn_small">Приостановить</button>
-                <button data-complite class="btn btn_green btn_small">Выполнено</button>
+                <button data-task-action="pause" class="btn btn_yellow btn_small">Приостановить</button>
+                <button data-task-action="complete" class="btn btn_green btn_small">Выполнено</button>
             `;
         }
 
         if (status === 2) {
             return `
-                 <button data-pause class="btn btn_yellow btn_small">Продолжить</button>
-                 <button data-complite class="btn btn_green btn_small">Выполнено</button>
+                 <button data-task-action="pause" class="btn btn_yellow btn_small">Продолжить</button>
+                 <button data-task-action="complete" class="btn btn_green btn_small">Выполнена</button>
             `;
         }
-        return '';
+        return '&nbsp;';
     }
     getErrorHtml = (errorData) => {
         const listArr = Array(8).fill({optionalCls: null, value: '&nbsp;'})
@@ -427,11 +429,12 @@ class Task {
 
     }
 
-    acceptTask = async ($btn) => {
+    action = async ($btn) => {
         if(this.loading) return
         modal.showSpinner();
+        const actionType = $btn.dataset.taskAction
         const taskId = this.getTaskId($btn);
-        this.response = await this.taskService.accept(taskId);
+        this.response = await this.taskService.action(taskId, actionType);
         this.responseHandler(this.taskRender.inModal, this.actionErrorHandler)(taskId);
         this.changeStatusTask(taskId, this.response.data.status);
     }
@@ -445,6 +448,8 @@ class Task {
             this.response = await this.taskService.get(taskId);
             this.responseHandler(this.taskRender.inModal, this.taskRender.errorInModal)();
             modal.hideSpinner();
+        }else if (this.response.data.status === 423) {
+
         }
     }
 
@@ -467,8 +472,8 @@ class Task {
     };
 
     clickHandler = (e) => {
-        if (e.target.closest('[data-accept]')) {
-            this.acceptTask(e.target.closest('[data-accept]'))
+        if (e.target.closest('[data-task-action]')) {
+            this.action(e.target.closest('[data-task-action]'))
         }
         if (e.target.closest('[data-show-info]')) {
             this.showTaskInModal(e.target.closest('[data-show-info]'));
