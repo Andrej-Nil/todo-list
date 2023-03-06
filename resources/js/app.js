@@ -177,48 +177,48 @@ class Modal extends ModalRender {
             this.$modal.classList.remove('forefront');
             this.body.scrollOn();
             this.clearContent();
-            this.hideSpinner();
+            // this.hideSpinner();
         }, 200)
     }
 
-    showMessage = (message) => {
-        this.setMessage(message)
-        this.$modalMessage.classList.add('show');
-        setTimeout(() => {
-            this.$modalMessage.classList.add('appearance');
-        }, 50)
-
-    }
-
-    hideMessage = () => {
-        this.$modalMessage.classList.remove('appearance');
-        setTimeout(() => {
-            this.$modalMessage.classList.remove('show');
-            this.clearMessage();
-        }, 200);
-
-    }
-
-
-
-    showSpinner = () => {
-        this.$spinner.classList.add('show');
-        this.$spinner.classList.add('appearance');
-    }
-
-    hideSpinner = () => {
-        this.$spinner.classList.remove('appearance');
-        setTimeout(() => {
-            this.$spinner.classList.remove('show');
-        }, 200)
-    }
+    // showMessage = (message) => {
+    //     this.setMessage(message)
+    //     this.$modalMessage.classList.add('show');
+    //     setTimeout(() => {
+    //         this.$modalMessage.classList.add('appearance');
+    //     }, 50)
+    //
+    // }
+    //
+    // hideMessage = () => {
+    //     this.$modalMessage.classList.remove('appearance');
+    //     setTimeout(() => {
+    //         this.$modalMessage.classList.remove('show');
+    //         this.clearMessage();
+    //     }, 200);
+    //
+    // }
+    //
+    //
+    //
+    // showSpinner = () => {
+    //     this.$spinner.classList.add('show');
+    //     this.$spinner.classList.add('appearance');
+    // }
+    //
+    // hideSpinner = () => {
+    //     this.$spinner.classList.remove('appearance');
+    //     setTimeout(() => {
+    //         this.$spinner.classList.remove('show');
+    //     }, 200)
+    // }
 
     clickHandler = (e) => {
         if (e.target.closest('[data-modal-close]')) {
             this.close();
         }
         if (e.target.closest('[data-close-message]')) {
-            this.hideMessage();
+            // this.hideMessage();
         }
 
     }
@@ -275,7 +275,7 @@ class TaskRender extends Render {
         const completed = status == 3 ? '(Завершена)' : '';
 
         return `
-            <div data-task-id="${id}" class="task">
+            <div data-task="${id}" class="task">
                 <h2 class="task__title">${title}${completed}</h2>
                 <div class="task__content">
 
@@ -291,6 +291,21 @@ class TaskRender extends Render {
                 <div class="task__controls">
                     ${btn}
                 </div>
+                <div data-spinner class="task__spinner">
+                <div class="spinner">
+                    <div class="spinner__cubes">
+                        <span class="leaf1"></span>
+                        <span class="leaf2"></span>
+                        <span class="leaf3"></span>
+                        <span class="leaf4"></span>
+                    </div>
+                </div>
+            </div>
+            <div data-message class="task-message block">
+                <p  data-message-text class="task-message__text"></p>
+               <button data-close-message class="task-message__btn btn btn_small btn_red">OK</button>
+            </div>
+
             </div>
          `
 
@@ -403,14 +418,49 @@ class Task {
             {id: 2, clsColor: 'btn_yellow', clsIcon: 'table__btn-icon_pause', title: 'Приостановлена'},
             {id: 3, clsColor: 'btn_green', clsIcon: 'table__btn-icon_complete', title: 'Завершена'},
         ]
+        this.$spinner = null;
         this.response = null;
         this.loading = false;
         this.taskRender = new TaskRender();
         this.taskService = new TaskService();
     }
 
+
+    showSpinner = ($btn) => {
+        const $task = $btn.closest('[data-task]');
+        this.$spinner = $task.querySelector('[data-spinner]');
+        this.$spinner.classList.add('show');
+        this.$spinner.classList.add('appearance');
+    }
+    hideSpinner = () => {
+        // if()
+            this.$spinner.classList.remove('appearance');
+            setTimeout(() => {
+                this.$spinner.classList.remove('show');
+                }, 200)
+    }
+
+    // showSpinner = () => {
+    //     this.$spinner.classList.add('show');
+    //     this.$spinner.classList.add('appearance');
+    // }
+    //
+    // hideSpinner = () => {
+    //     this.$spinner.classList.remove('appearance');
+    //     setTimeout(() => {
+    //         this.$spinner.classList.remove('show');
+    //     }, 200)
+    // }
+
+    showMessage = () => {
+
+    }
+    hideMessage = (argument) => {
+
+    }
+
     changeStatusTask = (taskId, status) => {
-        const $taskList = document.querySelectorAll(`[data-task-id="${taskId}"]`);
+        const $taskList = document.querySelectorAll(`[data-task="${taskId}"]`);
         const statusData = this.statusData.find( (item) => {
             return status == item.id;
         } )
@@ -426,12 +476,11 @@ class Task {
         const taskId = this.getTaskId($btn);
         this.response = await this.taskService.get(taskId);
         this.responseHandler(this.taskRender.inModal, this.taskRender.errorInModal)();
-
     }
 
     action = async ($btn) => {
         if(this.loading) return
-        modal.showSpinner();
+        this.showSpinner($btn);
         const actionType = $btn.dataset.taskAction
         const taskId = this.getTaskId($btn);
         this.response = await this.taskService.action(taskId, actionType);
@@ -444,10 +493,10 @@ class Task {
             this.taskRender.errorInModal(data);
 
         } else if (this.response.data.status === 409) {
-            modal.showMessage(data.message);
+           this.showMessage(taskId, data.message);
             this.response = await this.taskService.get(taskId);
             this.responseHandler(this.taskRender.inModal, this.taskRender.errorInModal)();
-            modal.hideSpinner();
+            this.hideSpinner();
         }else if (this.response.data.status === 423) {
 
         }
@@ -456,15 +505,16 @@ class Task {
 
 
 
+
     getTaskId =  ($btn) => {
-        const $task = $btn.closest('[data-task-id]');
-        return $task.dataset.taskId;
+        const $task = $btn.closest('[data-task]');
+        return $task.dataset.task;
     }
 
     responseHandler = (successFn, errorFn) => (argument) => {
         if (this.response.status === 'success' ) {
             successFn(this.response.data, argument);
-            modal.hideSpinner();
+            this.hideSpinner(argument);
         }
         if (this.response.status === 'error') {
             errorFn(this.response.data, argument);

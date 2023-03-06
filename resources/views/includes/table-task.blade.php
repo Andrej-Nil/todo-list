@@ -1,4 +1,4 @@
-<div data-task-id="{{$task->id}}" class="{{$task->is_important ? 'table-task table__row table__row_important' : 'table-task table__row'}}">
+<div data-task="{{$task->id}}" class="{{$task->is_important ? 'table-task table__row table__row_important' : 'table-task table__row'}}">
     <div class="table__coll table__coll_name">
         <a href="{{route('tasks.show', $task->id)}}"
            class="table__link">

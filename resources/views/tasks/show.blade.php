@@ -25,7 +25,7 @@
     </div>
 
     <div class="content">
-        <div data-task-id="{{$task->id}}" class="task block">
+        <div data-task="{{$task->id}}" class="task block">
             <div class="task__content">
                 <p class="task__description">{{$task->description}}</p>
                 <div class="task-info">
