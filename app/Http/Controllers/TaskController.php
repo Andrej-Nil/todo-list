@@ -58,40 +58,6 @@ class TaskController extends Controller
         }
 
         return back()->with('error', 'У вас нет прав удалять эту задачу');
-//
     }
 
-//    public function pause(Task $task)
-//    {
-//
-//        if ($task->status == 0) {
-//            return back()->with('error', 'Задача не выполняеться');
-//        }
-//        if ($task->status == 1) {
-//            $task->update(['status' => 2]);
-//            return back()->with('success', 'Задача приостановлина');
-//        }
-//        if ($task->status == 2) {
-//            $task->update(['status' => 1]);
-//            return back()->with('error', 'Выполенеие продолжено');
-//        }
-//        if ($task->status == 3) {
-//            return back()->with('error', 'Задача уже завершина');
-//        }
-//
-//    }
-//
-//    public function completed(Task $task)
-//    {
-//        if ($task->status == 0) {
-//            return back()->with('error', 'Задача не выполняеться');
-//        }
-//        if ($task->status == 1 || $task->status == 2) {
-//            $task->update(['status' => 3]);
-//            return back()->with('success', 'Задача выполнена');
-//        }
-//        if ($task->status == 3) {
-//            return back()->with('error', 'Задача уже завершина');
-//        }
-//    }
 }

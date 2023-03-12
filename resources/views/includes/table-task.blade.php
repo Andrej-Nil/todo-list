@@ -50,7 +50,7 @@
     @endif
 
     <div class="table__coll">
-        <div data-show-info class="table__btn btn btn_white">
+        <div data-show-task class="table__btn btn btn_white">
             <i class="table__btn-icon table__btn-icon_description" title="Описание"></i>
         </div>
     </div>

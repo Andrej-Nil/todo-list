@@ -30,11 +30,13 @@ class TaskController extends Controller
             return ResponseHelper::getError('Ошибка доступа', 423);
         }
 
-        $task->update([
-            'executor_id'=>$userId,
-            'status'=>1
-        ]);
-        return new TaskResource($task);
+//        $task->update([
+//            'executor_id'=>$userId,
+//            'status'=>1
+//        ]);
+        return ResponseHelper::getError('Эта задача уже выполнена', 409);
+//        return new TaskResource($task);
+//        return ResponseHelper::getError('Ошибка доступа', 423);
 //        if ($task->is_publish) {
 //            $users = $task->users;
 //            if (count($users)) {

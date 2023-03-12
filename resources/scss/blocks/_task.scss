@@ -1,8 +1,12 @@
 .task{
+    position: relative;
+
+}
+
+.task__body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-
 }
 
 .task__title{
