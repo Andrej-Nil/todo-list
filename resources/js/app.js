@@ -204,7 +204,6 @@ class TaskRender extends Render {
     }
 
 
-
     getStatusBtnHtml = (statusData) => {
         const {title, clsColor, clsIcon} = statusData;
         const classesBtn = ['table__btn', 'btn'];
@@ -363,7 +362,7 @@ class Task {
             {id: 3, clsColor: 'btn_green', clsIcon: 'table__btn-icon_complete', title: 'Завершена'},
         ];
         this.loading = false;
-        this.$task = null;
+        this.task = null;
         this.taskRender = new TaskRender();
         this.taskService = new TaskService();
     }
@@ -372,45 +371,56 @@ class Task {
         if (!$btn) return;
         if (this.loading) return;
         modal.open(this.taskRender.getTaskSkeletonHtml);
-        const taskId = this.getTaskId($btn);
+        const taskId = $btn.closest('[data-task]').dataset.task;
         this.response = await this.taskService.get(taskId);
-        this.responseHandler(this.renderInModal, this.renderErrorInModal)();
+        this.responseHandler(this.renderTaskInModal, this.renderErrorInModal)();
     }
 
     action = async ($btn) => {
         if (this.loading) return;
-        this.$task = $btn.closest('[data-task]');
+        this.setTask($btn);
         this.showSpinner();
-        const actionType = $btn.dataset.taskAction
-        const taskId = this.getTaskId($btn);
-        this.response = await this.taskService.action(taskId, actionType);
-        this.responseHandler(this.renderInModal, this.actionErrorHandler)(taskId);
-        this.changeStatusTask(taskId, this.response.data.status);
+        this.response = await this.taskService.action(this.task.id, this.task.actionType);
+        this.responseHandler(this.renderTaskInModal, this.actionErrorHandler)();
+        this.changeStatusTask();
     }
 
-    actionErrorHandler = async (taskId) => {
+
+    setTask = ($btn) => {
+        if (!$btn) return
+        const $task = $btn.closest('[data-task]');
+        this.task = {
+            actionType: $btn.dataset.taskAction,
+            id: $task.dataset.task,
+            $task: $task,
+            $taskBody: $task.querySelector('[data-body]'),
+            $messageBlock: $task.querySelector('[data-message]'),
+            $messageText: $task.querySelector('[data-message-text]'),
+            $spinner: $task.querySelector('[data-spinner]')
+        }
+    }
+
+    actionErrorHandler = async () => {
         if (this.response.data.status === 404) {
             this.renderErrorInModal();
 
         } else if (this.response.data.status === 409) {
-           this.showMessage();
-            this.response = await this.taskService.get(taskId);
+            this.showMessage();
+            this.response = await this.taskService.get(this.task.id);
             this.responseHandler(this.updateTask, this.renderErrorInModal)();
-            // this.hideSpinner();
-        }else if (this.response.data.status === 423) {
+        } else if (this.response.data.status === 423) {
 
         }
     }
 
     showSpinner = () => {
-        if(!this.$task) return;
-        const $spinner = this.$task.querySelector('[data-spinner]');
-        $spinner.classList.add('show');
-        $spinner.classList.add('appearance');
+        if (!this.task) return;
+        this.task.$spinner.classList.add('show');
+        this.task.$spinner.classList.add('appearance');
     }
 
     hideSpinner = () => {
-        if(!this.$task) return;
+        if (!this.$task) return;
         const $spinner = this.$task.querySelector('[data-spinner]');
         $spinner.classList.remove('appearance');
         setTimeout(() => {
@@ -420,10 +430,13 @@ class Task {
 
 
     showMessage = () => {
-        if(!this.$task) return;
-        const $message = this.$task.querySelector('[data-message]');
-        $message.classList.add('show');
-        $message.classList.add('appearance');
+        if (!this.task) return;
+        this.task.$messageBlock.classList.add('show');
+        setTimeout(() => {
+            this.task.$messageBlock.classList.add('appearance');
+        }, 100);
+
+        this.task.$messageText.innerHTML = this.response.data.message;
     }
 
 
@@ -444,47 +457,48 @@ class Task {
     //
 
 
-
-    hideMessage = (argument) => {
+    hideMessage = () => {
 
     }
 
-    changeStatusTask = (taskId, status) => {
-        const $taskList = document.querySelectorAll(`[data-task="${taskId}"]`);
-        const statusData = this.statusData.find((item) => {
-            return status == item.id;
-        })
-        $taskList.forEach($task => {
-            const $statusBtn = $task.querySelector('[data-status]');
-            if ($statusBtn) this.taskRender.statusBtn($statusBtn, statusData);
-        })
+    changeStatusTask = () => {
+        const statusData = this.getStatusData();
+        if (!statusData) return;
+        this.renderStatusBtns(statusData);
     }
 
 
-    renderInModal = () => {
+    renderTaskInModal = () => {
         const taskMark = this.taskRender.getTaskHtml(this.response.data);
         modal.contentRender(taskMark);
     }
 
 
     updateTask = () => {
-        if(!this.$task) return
-        const $taskBody = this.$task.querySelector('[data-body]')
-        this.taskRender.body($taskBody, {info: []})
+        if (!this.task) return
+        this.taskRender.body(this.task.$taskBody, this.response.data)
+        this.changeStatusTask();
     }
     renderErrorInModal = () => {
+
         const errorMark = this.taskRender.getErrorHtml(this.response.data);
         modal.contentRender(errorMark);
     }
 
-
-
-
-
-
-    getTaskId = ($btn) => {
-        return $btn.closest('[data-task]').dataset.task;
+    getStatusData = () => {
+        return this.statusData.find((item) => {
+            return this.response.data.status == item.id;
+        })
     }
+
+    renderStatusBtns = (statusData) => {
+        const $taskList = document.querySelectorAll(`[data-task="${this.task.id}"]`);
+        $taskList.forEach($task => {
+            const $statusBtn = $task.querySelector('[data-status]');
+            if ($statusBtn) this.taskRender.statusBtn($statusBtn, statusData);
+        })
+    }
+
 
     responseHandler = (successFn, errorFn) => (argument) => {
         if (this.response.status === 'success') {
@@ -505,6 +519,8 @@ class Task {
         }
 
     }
+
+
     listeners = () => {
         document.addEventListener('click', this.clickHandler);
     }
