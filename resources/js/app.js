@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 class Service {
     constructor() {
         this.token = this.getToken();
@@ -137,11 +135,11 @@ class Modal {
         this.listeners();
     }
 
-    open = (getHtmlFn) => {
+    open = (markHtml) => {
         this.$modal.classList.add('forefront');
         this.$modal.classList.add('open');
         this.body.scrollOff();
-        this.contentRender(getHtmlFn);
+        this.contentRender(markHtml);
     }
 
     contentRender = (markHtml) => {
@@ -235,7 +233,7 @@ class TaskRender extends Render {
                 </div>
                 <div data-message class="task-message block">
                     <p  data-message-text class="task-message__text"></p>
-                   <button data-close-message class="task-message__btn btn btn_small btn_red">OK</button>
+                   <button data-hide-message class="task-message__btn btn btn_small btn_red">OK</button>
                 </div>
             </div>
          `
@@ -263,24 +261,27 @@ class TaskRender extends Render {
                 ${btn}
             </div>
         `
-
     }
+
     getTaskSkeletonHtml = () => {
+
         const listArr = Array(8).fill({optionalCls: 'shine', value: '&nbsp;'})
         const taskInfoList = this.getListHtml(this.getInfoEmptyItemHtml, listArr);
         return `
-            <div class="task">
-                <h2 class="task__title shine">&nbsp;</h2>
-                <div class="task__content">
-                    <p class="task__description shine">&nbsp;</p>
+            <div class="task block">
+              <div data-body class="task__body">
+                    <h2 class="task__title shine">&nbsp;</h2>
+                    <div class="task__content">
+                        <p class="task__description shine">&nbsp;</p>
 
-                    <div class="task-info">
-                        <ul class="task-info__list">
-                            ${taskInfoList}
-                        </ul>
+                        <div class="task-info">
+                            <ul class="task-info__list">
+                                ${taskInfoList}
+                            </ul>
+                        </div>
                     </div>
+                    <div class="task__controls task__controls_empty shine"></div>
                 </div>
-                <div class="task__controls task__controls_empty shine"></div>
             </div>
         `
     }
@@ -300,6 +301,7 @@ class TaskRender extends Render {
         if (optionalCls) classes.push(optionalCls);
         return `<li class="${classes.join(' ')}">${value}</li>`
     }
+
     getInfoValueHtml = (value, url) => {
         if (url) {
             return `<a href="${url}" class="task-info__value link">${value}</a>`
@@ -330,8 +332,8 @@ class TaskRender extends Render {
         const taskInfoList = this.getListHtml(this.getInfoEmptyItemHtml, listArr);
 
         return `
-            <div class="task">
-
+            <div class="task block">
+            <div class="task__body">
                <h2 class="task__title">Ошибка</h2>
                <div class="task__content">
                   <p class="task__description">${errorData.message}</p>
@@ -342,6 +344,7 @@ class TaskRender extends Render {
                     </div>
                  </div>
                  <div class="task__controls task__controls_empty"></div>
+                 </div>
             </div>
         `;
     }
@@ -370,7 +373,8 @@ class Task {
     showTask = async ($btn) => {
         if (!$btn) return;
         if (this.loading) return;
-        modal.open(this.taskRender.getTaskSkeletonHtml);
+
+        modal.open(this.taskRender.getTaskSkeletonHtml());
         const taskId = $btn.closest('[data-task]').dataset.task;
         this.response = await this.taskService.get(taskId);
         this.responseHandler(this.renderTaskInModal, this.renderErrorInModal)();
@@ -408,24 +412,29 @@ class Task {
             this.showMessage();
             this.response = await this.taskService.get(this.task.id);
             this.responseHandler(this.updateTask, this.renderErrorInModal)();
+
         } else if (this.response.data.status === 423) {
 
         }
+
+        this.hideSpinner()
     }
 
     showSpinner = () => {
         if (!this.task) return;
         this.task.$spinner.classList.add('show');
-        this.task.$spinner.classList.add('appearance');
+        setTimeout(() => {
+            this.task.$spinner.classList.add('appearance');
+        }, 50)
+
     }
 
     hideSpinner = () => {
-        if (!this.$task) return;
-        const $spinner = this.$task.querySelector('[data-spinner]');
-        $spinner.classList.remove('appearance');
+        if (!this.task) return;
+        this.task.$spinner.classList.remove('appearance');
         setTimeout(() => {
-            $spinner.classList.remove('show');
-        }, 200)
+            this.task.$spinner.classList.remove('show');
+        },  200)
     }
 
 
@@ -434,9 +443,18 @@ class Task {
         this.task.$messageBlock.classList.add('show');
         setTimeout(() => {
             this.task.$messageBlock.classList.add('appearance');
-        }, 100);
+        }, 50);
 
         this.task.$messageText.innerHTML = this.response.data.message;
+    }
+
+    hideMessage = () => {
+
+        if (!this.task) return;
+        this.task.$messageBlock.classList.remove('appearance');
+        setTimeout(() => {
+            this.task.$messageBlock.classList.remove('show');
+        }, 200);
     }
 
 
@@ -457,10 +475,6 @@ class Task {
     //
 
 
-    hideMessage = () => {
-
-    }
-
     changeStatusTask = () => {
         const statusData = this.getStatusData();
         if (!statusData) return;
@@ -471,6 +485,7 @@ class Task {
     renderTaskInModal = () => {
         const taskMark = this.taskRender.getTaskHtml(this.response.data);
         modal.contentRender(taskMark);
+        this.hideSpinner()
     }
 
 
@@ -480,9 +495,9 @@ class Task {
         this.changeStatusTask();
     }
     renderErrorInModal = () => {
-
         const errorMark = this.taskRender.getErrorHtml(this.response.data);
         modal.contentRender(errorMark);
+        this.hideSpinner()
     }
 
     getStatusData = () => {
@@ -516,6 +531,9 @@ class Task {
         }
         if (e.target.closest('[data-show-task]')) {
             this.showTask(e.target.closest('[data-show-task]'));
+        }
+        if (e.target.closest('[data-hide-message]')) {
+            this.hideMessage();
         }
 
     }
