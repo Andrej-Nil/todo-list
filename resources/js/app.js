@@ -358,6 +358,7 @@ class Task {
 
     init = () => {
         this.listeners();
+        this.topControls = document.querySelector('[data-top-controls]');
         this.statusData = [
             {id: 0, clsColor: null, clsIcon: 'table__btn-icon_clock', title: 'В ожидании'},
             {id: 1, clsColor: 'btn_blue', clsIcon: 'table__btn-icon_clock', title: 'В работе'},
@@ -383,10 +384,10 @@ class Task {
     action = async ($btn) => {
         if (this.loading) return;
         this.setTask($btn);
+
         this.showSpinner();
         this.response = await this.taskService.action(this.task.id, this.task.actionType);
-        this.responseHandler(this.renderTaskInModal, this.actionErrorHandler)();
-        this.changeStatusTask();
+        this.responseHandler(this.updateTask, this.actionErrorHandler)();
     }
 
 
@@ -414,7 +415,7 @@ class Task {
             this.responseHandler(this.updateTask, this.renderErrorInModal)();
 
         } else if (this.response.data.status === 423) {
-
+            this.renderErrorInModal();
         }
 
         this.hideSpinner()
@@ -458,29 +459,18 @@ class Task {
     }
 
 
-    // hideSpinner = () => {
-    // if()
-    //     this.$spinner.classList.remove('appearance');
-    //     setTimeout(() => {
-    //         this.$spinner.classList.remove('show');
-    //         }, 200)
-    // }
-
-    // showSpinner = () => {
-    //     const $spinner = this.$displayedTask.querySelector('[data-spinner]')
-    //     console.log()
-    //     $spinner.classList.add('show');
-    //     $spinner.classList.add('appearance');
-    // }
-    //
-
-
     changeStatusTask = () => {
         const statusData = this.getStatusData();
         if (!statusData) return;
         this.renderStatusBtns(statusData);
     }
 
+
+    removeTopControls = () => {
+        if(this.topControls){
+            this.taskRender.delete(this.topControls);
+        }
+    }
 
     renderTaskInModal = () => {
         const taskMark = this.taskRender.getTaskHtml(this.response.data);
@@ -493,6 +483,10 @@ class Task {
         if (!this.task) return
         this.taskRender.body(this.task.$taskBody, this.response.data)
         this.changeStatusTask();
+        this.hideSpinner();
+        if(this.response.data.status === 3){
+            this.removeTopControls()
+        }
     }
     renderErrorInModal = () => {
         const errorMark = this.taskRender.getErrorHtml(this.response.data);

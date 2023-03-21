@@ -30,35 +30,11 @@ class TaskController extends Controller
             return ResponseHelper::getError('Ошибка доступа', 423);
         }
 
-//        $task->update([
-//            'executor_id'=>$userId,
-//            'status'=>1
-//        ]);
-        return ResponseHelper::getError('Эта задача уже выполнена', 409);
-//        return new TaskResource($task);
-//        return ResponseHelper::getError('Ошибка доступа', 423);
-//        if ($task->is_publish) {
-//            $users = $task->users;
-//            if (count($users)) {
-//                return [
-//                    'publish'
-//                ];
-//                return back()->with('error', 'ошибка исользования');
-//            }
-//        } else {
-//            if ($task->owner_id !== $userId) {
-//                return [
-//                    'owner'
-//                ];
-//                return back()->with('error', 'ошибка публичность');
-//            }
-//        }
-//        $task->update(['status' => 1]);
-//        $task->users()->attach(Auth::user());
-//        return [
-//            'data' => ['type' => 'success']
-//        ];
-//        return back()->with('success', 'Принята');
+        $task->update([
+            'executor_id'=>$userId,
+            'status'=>1
+        ]);
+        return new TaskResource($task);
     }
 
     public function pause(Task $task){
