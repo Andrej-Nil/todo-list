@@ -27,6 +27,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::post('/tasks/{task}', [\App\Http\Controllers\Api\TaskController::class, 'show']);
+    Route::post('/tasks/{task}/store', [\App\Http\Controllers\Api\TaskController::class, 'store']);
+
     Route::post('/tasks/{task}/accept', [\App\Http\Controllers\Api\TaskController::class, 'accept']);
     Route::post('/tasks/{task}/pause', [\App\Http\Controllers\Api\TaskController::class, 'pause'] );
     Route::post('/tasks/{task}/complete', [\App\Http\Controllers\Api\TaskController::class, 'complete'] );

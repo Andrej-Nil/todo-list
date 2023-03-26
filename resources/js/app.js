@@ -435,7 +435,7 @@ class Task {
         this.task.$spinner.classList.remove('appearance');
         setTimeout(() => {
             this.task.$spinner.classList.remove('show');
-        },  200)
+        }, 200)
     }
 
 
@@ -467,7 +467,7 @@ class Task {
 
 
     removeTopControls = () => {
-        if(this.topControls){
+        if (this.topControls) {
             this.taskRender.delete(this.topControls);
         }
     }
@@ -484,7 +484,7 @@ class Task {
         this.taskRender.body(this.task.$taskBody, this.response.data)
         this.changeStatusTask();
         this.hideSpinner();
-        if(this.response.data.status === 3){
+        if (this.response.data.status === 3) {
             this.removeTopControls()
         }
     }
@@ -538,6 +538,24 @@ class Task {
     }
 }
 
+
+class Form {
+
+}
+
+class CreatorTask extends Form {
+    constructor(idForm) {
+        super();
+        this.$form = document.querySelector(idForm);
+        this.init()
+        this.form = new Form()
+    }
+
+    init = () => {
+        if(!this.$form) return;
+        console.log('tresadfgh')
+    }
+}
 
 class UserMenu {
     constructor(idUserBtn, idUserMenu) {
@@ -653,3 +671,4 @@ const modal = new Modal('#modal');
 const userMenu = new UserMenu('#userBtn', '#userMenu');
 const select = new Select();
 const task = new Task();
+const creatorTask = new CreatorTask('#createTaskForm');

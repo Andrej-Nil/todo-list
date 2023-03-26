@@ -15,7 +15,7 @@
     </div>
 
     <div class="content">
-        <form class="form block" action="{{route('tasks.store')}}" method="POST">
+        <form id="createTaskForm" class="form block" action="{{route('tasks.store')}}" method="POST">
             @csrf
             @include('tasks.form')
             <div class="form__bottom">
