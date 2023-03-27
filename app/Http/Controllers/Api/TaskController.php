@@ -16,10 +16,6 @@ class TaskController extends Controller
         return new TaskResource($task);
     }
 
-    public function store(Task $task){
-        return ['hello'];
-    }
-
     public function accept(Task $task)
     {
         $userId = Auth::user()->id;

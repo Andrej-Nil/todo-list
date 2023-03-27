@@ -3,13 +3,12 @@
     flex-direction: column;
     gap: 10px;
 }
-.control_row{
+//.control__row{
+//    flex-direction: row;
+//    align-items: center;
+//}
 
-    flex-direction: row;
-    align-items: center;
-    .control__label{
-        width: 150px;
-        flex-shrink: 0;
-    }
-
+.control__label{
+    width: 150px;
+    flex-shrink: 0;
 }

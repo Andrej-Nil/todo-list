@@ -11,16 +11,16 @@
                 @csrf
                 <div class="control">
                     <label for="email" class="control__label">Почта</label>
-                    <input type="text" id="email" name="email" class="input">
+                    <input type="text" id="email" name="email" class="input @error('email')error @enderror">
                     @error('email')
-                    <span><strong>{{ $message }}</strong></span>
+                        <span class="control__message">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="control">
                     <label for="password" class="control__label">Пароль</label>
-                    <input type="password" id="password" name="password" class="input">
+                    <input type="password" id="password" name="password" class="input @error('password')error @enderror">
                     @error('password')
-                    <span><strong>{{ $message }}</strong></span>
+                        <span class="control__message">{{ $message }}</span>
                     @enderror
                 </div>
 

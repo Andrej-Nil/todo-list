@@ -1,6 +1,6 @@
 <div class="form__inputs">
-    <input class="input" type="text" placeholder="Название" value="{{old('title') ?? $task->description ?? ''}}"
-           name="title">
+    <input class="input" type="text" placeholder="Название" value="{{old('title') ?? $task->description ?? ''}}"name="title">
+
 
     <textarea class="input " name="description" cols="30" rows="5"
               placeholder="Описание">{{old('description') ?? $task->description ?? ''}}</textarea>
