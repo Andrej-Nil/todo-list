@@ -24,13 +24,20 @@ class TaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' =>['string', 'required'],
-            'description'=>['string', 'required'],
+            'title' =>['required'],
+            'description'=>['required'],
             'status'=>['string', 'between:0,3'],
             'is_important'=>['integer', 'between:0,1'],
             'is_urgent'=>['integer', 'between:0,1'],
             'is_publish'=>['integer', 'between:0,1'],
             'date_of_delivery'=>['date_format:Y-m-d', 'nullable'],
+        ];
+    }
+
+    public function messages() {
+        return [
+            'title.required'=>'Введите название',
+            'description.required'=>'Описание должно быть заполнено'
         ];
     }
 }

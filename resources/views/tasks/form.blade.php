@@ -1,9 +1,18 @@
 <div class="form__inputs">
-    <input class="input" type="text" placeholder="Название" value="{{old('title') ?? $task->description ?? ''}}"name="title">
+    <div class="control">
+        <input class="input @error('title')error @enderror" type="text" required placeholder="Название" value="{{old('title') ?? $task->description ?? ''}}" name="title">
+        @error('title')
+        <span class="control__message error">{{ $message }}</span>
+        @enderror
+    </div>
 
-
-    <textarea class="input " name="description" cols="30" rows="5"
-              placeholder="Описание">{{old('description') ?? $task->description ?? ''}}</textarea>
+    <div class="control">
+        <textarea class="input @error('description')error @enderror" required name="description" cols="30" rows="5"
+                placeholder="Описание">{{( old('description', null) == null) ? $task->description ?? '': old('description')}}</textarea>
+        @error('description')
+        <span class="control__message error">{{ $message }}</span>
+        @enderror
+    <div/>
 
 </div>
 <div class="form__inputs">
